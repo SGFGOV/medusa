@@ -109,6 +109,10 @@ export class AddressPayload {
   phone: string
 
   @IsOptional()
+  @IsString()
+  gstin: string
+
+  @IsOptional()
   metadata: object
 
   @IsOptional()
@@ -148,6 +152,10 @@ export class AddressCreatePayload {
   @IsOptional()
   @IsString()
   phone: string
+  @IsOptional()
+  @IsString()
+  gstin: string
+  
   @IsOptional()
   metadata: object
   @IsOptional()

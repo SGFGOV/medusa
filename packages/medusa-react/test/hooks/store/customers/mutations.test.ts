@@ -11,6 +11,7 @@ describe("useCreateCustomer hook", () => {
       email: "johnwick@medusajs.com",
       password: "supersecret",
       phone: "111111",
+      gstin: "12ABCDE1234D12"
     }
 
     const { result, waitFor } = renderHook(() => useCreateCustomer(), {
@@ -37,6 +38,7 @@ describe("useUpdateMe hook", () => {
       email: "lebronjames@medusajs.com",
       password: "supersecret",
       phone: "111111",
+      gstin: "12ABCDE1234D12"
     }
 
     const { result, waitFor } = renderHook(() => useUpdateMe(), {

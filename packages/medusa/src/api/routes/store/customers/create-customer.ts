@@ -64,4 +64,9 @@ export class StorePostCustomersReq {
   @IsOptional()
   @IsString()
   phone?: string
+
+  @IsOptional()
+  @IsString()
+  gstin?: string
+
 }

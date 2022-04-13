@@ -8,7 +8,7 @@ import middlewares from "../middleware"
 const route = Router()
 
 export default (app, rootDirectory) => {
-  app.use("/restock-notifications", route)
+  app.use("/invoice", route)
 
   const { configModule } = getConfigFile(rootDirectory, "medusa-config")
   const { projectConfig } = configModule
@@ -18,9 +18,9 @@ export default (app, rootDirectory) => {
     credentials: true,
   }
 
-  route.options("/variants/:variant_id", cors(corsOptions))
+  route.options("/orders/:invoice_id", cors(corsOptions))
   route.post(
-    "/variants/:variant_id",
+    "/orders/:invoice_id",
     cors(corsOptions),
     bodyParser.json(),
     middlewares.wrap(require("./add-email").default)

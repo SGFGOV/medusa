@@ -91,6 +91,9 @@ export class Address {
   @Column({ type: "varchar", nullable: true })
   phone: string | null
 
+  @Column({ type: "varchar", nullable: true })
+  gstin: string | null
+
   @CreateDateColumn({ type: resolveDbType("timestamptz") })
   created_at: Date
 

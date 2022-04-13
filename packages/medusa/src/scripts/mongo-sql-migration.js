@@ -442,6 +442,7 @@ const migrateCustomers = async (mongodb, queryRunner) => {
       first_name: c.first_name,
       last_name: c.last_name,
       phone: c.phone,
+      gstin: c.gstin,
       has_account: c.has_account,
       password_hash: c.password_hash,
       metadata: c.metadata,
@@ -627,6 +628,7 @@ const migrateOrders = async (mongodb, queryRunner) => {
       province: o.shipping_address.province,
       postal_code: o.shipping_address.postal_code,
       phone: o.shipping_address.phone,
+      gstin: o.shipping_address.gstin,
     })
 
     /*************************************************************************
@@ -842,6 +844,7 @@ const migrateOrders = async (mongodb, queryRunner) => {
               province: s.shipping_address.province,
               postal_code: s.shipping_address.postal_code,
               phone: s.shipping_address.phone,
+              gstin: s.shipping_address.gstin,
             })
             toCreate.shipping_address = address
           }

@@ -31,6 +31,7 @@ describe("useAdminCreateOrder hook", () => {
         province: "copenhagen",
         postal_code: "382793",
         phone: "4897394",
+        gstin: "12ABCDE1234D12",
         metadata: null,
       },
       shipping_address: {
@@ -44,6 +45,7 @@ describe("useAdminCreateOrder hook", () => {
         province: "copenhagen",
         postal_code: "382793",
         phone: "4897394",
+        gstin: "12ABCDE1234D12",
         metadata: null,
       },
       items: [

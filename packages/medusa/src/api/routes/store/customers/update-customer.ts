@@ -32,6 +32,9 @@ import { validator } from "../../../../utils/validator"
  *           phone:
  *             description: "The Customer's phone number."
  *             type: string
+ *           gstin:
+ *             description: "The Customer's GSTIN number."
+ *             type: string
  *           email:
  *             description: "The email of the customer."
  *             type: string
@@ -86,6 +89,10 @@ export class StorePostCustomersCustomerReq {
   @IsOptional()
   @IsString()
   phone?: string
+
+  @IsOptional()
+  @IsString()
+  gstin?: string
 
   @IsOptional()
   @IsEmail()

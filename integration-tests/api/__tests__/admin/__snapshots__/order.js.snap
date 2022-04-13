@@ -15,6 +15,7 @@ Object {
   "last_name": null,
   "metadata": null,
   "phone": null,
+  "gstin": null,
   "postal_code": "1235",
   "province": "",
   "updated_at": Any<String>,

@@ -1,11 +1,11 @@
-class VariantSubscriber {
-  constructor({ manager, eventBusService, restockNotificationService }) {
+class OrderSubscriber {
+  constructor({ manager, eventBusService, invoiceService }) {
     this.manager_ = manager
-    this.restockNotificationService_ = restockNotificationService
+    this.invoiceService_ = invoiceService
 
     eventBusService.subscribe(
-      "product-variant.updated",
-      this.handleVariantUpdate
+      "order.updated",
+      this.handleOrderUpdate
     )
 
     eventBusService.subscribe(
@@ -15,16 +15,16 @@ class VariantSubscriber {
   }
 
   handleDelayedExecute = async (data) => {
-    const { variant_id } = data
-    return await this.restockNotificationService_.restockExecute(variant_id)
+    const { invoice_id } = data
+    return await this.invoiceService_.restockExecute(invoice_id)
   }
 
-  handleVariantUpdate = async (data) => {
+  handleOrderUpdate = async (data) => {
     const { id, fields } = data
-    if (fields.includes("inventory_quantity")) {
+    if (fields.includes("invoice_id")) {
       return await this.manager_.transaction(
         async (m) =>
-          await this.restockNotificationService_
+          await this.invoiceService_
             .withTransaction(m)
             .triggerRestock(id)
       )
@@ -34,4 +34,4 @@ class VariantSubscriber {
   }
 }
 
-export default VariantSubscriber
+export default OrderSubscriber

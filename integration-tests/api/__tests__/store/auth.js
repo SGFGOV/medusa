@@ -54,6 +54,7 @@ describe("/store/auth", () => {
       first_name: "test",
       last_name: "testesen",
       phone: null,
+      gstin: null,
       email: "test@testesen.dk",
     })
   })

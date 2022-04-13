@@ -247,6 +247,9 @@ paths:
                 phone:
                   type: string
                   description: The Customer's phone number.
+                gstin:
+                  type: string
+                  description: The Customer's GST number.
   "/customers/me/addresses/{address_id}":
     delete:
       operationId: DeleteCustomersCustomerAddressesAddress
@@ -347,6 +350,9 @@ paths:
                   type: string
                 phone:
                   description: The Customer's phone number.
+                  type: string
+                gstin:
+                  description: The Customer's gstin number.
                   type: string
                 email:
                   description: The email of the customer.
@@ -2080,6 +2086,8 @@ components:
         last_name:
           type: string
         phone:
+          type: string
+        gstin:
           type: string
         has_account:
           type: boolean

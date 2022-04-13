@@ -872,6 +872,7 @@ describe("CartService", () => {
         province: "CA",
         postal_code: "93011",
         phone: "+1 (222) 333 4444",
+        gstin: "12ABCDE1234D12",
       }
 
       await cartService.update(IdMap.getId("emptyCart"), {
@@ -933,6 +934,7 @@ describe("CartService", () => {
         province: "CA",
         postal_code: "93011",
         phone: "+1 (222) 333 4444",
+        gstin: "12ABCDE1234D12",
       }
 
       await cartService.update(IdMap.getId("emptyCart"), {
@@ -971,6 +973,7 @@ describe("CartService", () => {
         province: "CA",
         postal_code: "93011",
         phone: "+1 (222) 333 4444",
+        gstin: "12ABCDE1234D12",
       }
 
       await expect(

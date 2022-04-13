@@ -298,6 +298,29 @@ class CustomerService extends BaseService {
 
     return customer
   }
+/**
+   * Gets a customer by gstin.
+   * @param {string} gstin - the gstin of the customer to get.
+   * @param {Object} config - the config object containing query settings
+   * @return {Promise<Customer>} the customer document.
+   */
+ async retrieveByGstin(gstin, config = {}) {
+  const customerRepo = this.manager_.getCustomRepository(
+    this.customerRepository_
+  )
+
+  const query = this.buildQuery_({ gstin }, config)
+  const customer = await customerRepo.findOne(query)
+
+  if (!customer) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Customer with gstin ${gstin} was not found`
+    )
+  }
+
+  return customer
+}
 
   /**
    * Hashes a password
@@ -538,6 +561,7 @@ class CustomerService extends BaseService {
           a.address_2 === address.address_2 &&
           a.city === address.city &&
           a.phone === address.phone &&
+          a.gstin === address.gstin &&
           a.postal_code === address.postal_code &&
           a.province === address.province &&
           a.first_name === address.first_name &&

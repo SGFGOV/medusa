@@ -13,6 +13,7 @@ Object {
   "metadata": null,
   "orders": Array [],
   "phone": null,
+  "gstin": null,
   "shipping_addresses": Array [
     Object {
       "address_1": null,
@@ -28,6 +29,7 @@ Object {
       "last_name": "James",
       "metadata": null,
       "phone": null,
+      "gstin": null,
       "postal_code": null,
       "province": null,
       "updated_at": Any<String>,
@@ -53,6 +55,7 @@ Object {
     "last_name": "James",
     "metadata": null,
     "phone": null,
+    "gstin": null,
     "postal_code": null,
     "province": null,
     "updated_at": Any<String>,
@@ -68,6 +71,7 @@ Object {
   "last_name": null,
   "metadata": null,
   "phone": null,
+  "gstin": null,
   "updated_at": Any<String>,
 }
 `;

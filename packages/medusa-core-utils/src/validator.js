@@ -21,6 +21,7 @@ Joi.address = () => {
         .optional(),
       postal_code: Joi.string().required(),
       phone: Joi.string().optional(),
+      gstin: Joi.string().optional(),
       metadata: Joi.object()
         .allow(null, {})
         .optional(),

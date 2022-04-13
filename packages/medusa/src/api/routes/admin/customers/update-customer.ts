@@ -38,6 +38,9 @@ import { FindParams } from "../../../../types/common"
  *           phone:
  *             type: string
  *             description: The Customer's phone number.
+ *           gstin:
+ *             type: string
+ *             description: The Customer's GSTIN number.
  *           password:
  *             type: string
  *             description: The Customer's password.

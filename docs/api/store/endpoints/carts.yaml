@@ -223,6 +223,7 @@ response: |
         "province": null,
         "postal_code": null,
         "phone": null,
+        "gstin": null,
         "created_at": "2021-02-04T15:40:54.691Z",
         "updated_at": "2021-02-04T15:40:54.691Z",
         "deleted_at": null,

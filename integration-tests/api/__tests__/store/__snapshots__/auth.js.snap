@@ -13,6 +13,7 @@ Object {
   "metadata": null,
   "orders": Array [],
   "phone": null,
+  "gstin": null,
   "updated_at": Any<String>,
 }
 `;

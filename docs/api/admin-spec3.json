@@ -196,6 +196,10 @@
                   "phone": {
                     "type": "string",
                     "description": "The Customer's phone number."
+                  },
+                  "gstin": {
+                    "type": "string",
+                    "description": "The Customer's GST number."
                   }
                 }
               }
@@ -298,6 +302,10 @@
                   },
                   "phone": {
                     "description": "The Customer's phone number.",
+                    "type": "object"
+                  },
+                  "gstin": {
+                    "description": "The Customer's GST number.",
                     "type": "object"
                   }
                 }
@@ -7212,6 +7220,9 @@
             "type": "string"
           },
           "phone": {
+            "type": "string"
+          },
+          "gstin": {
             "type": "string"
           },
           "has_account": {

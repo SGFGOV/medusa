@@ -33,6 +33,7 @@ export default async (req, res) => {
           country_code: shipping_address.country,
           postal_code: shipping_address.postal_code,
           phone: shipping_address.phone,
+          
         }
 
         let billingAddress = {

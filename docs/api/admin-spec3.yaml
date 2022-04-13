@@ -557,6 +557,9 @@ paths:
                 phone:
                   type: string
                   description: The Customer's phone number.
+                gstin:
+                  type: string
+                  description: The Customer's GST number.
                 metadata:
                   type: object
                   description: Metadata for the customer.
@@ -628,6 +631,9 @@ paths:
                 last_name:
                   type: string
                   description: The Customer's last name.
+                gstin:
+                  type: string
+                  description: The Customer's GST number.
                 phone:
                   type: string
                   description: The Customer's phone number.
@@ -6938,6 +6944,8 @@ components:
         last_name:
           type: string
         phone:
+          type: string
+        gstin:
           type: string
         has_account:
           type: boolean

@@ -7,3 +7,5 @@ lerna-debug.log
 *.tgz
 .idea
 __mocks__
+
+*/medusa-plugin-invoice-generator/*

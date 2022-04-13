@@ -69,6 +69,7 @@ const testOrder = generateOrder(
       country_code: "us",
       postal_code: "12345",
       phone: "+18001231234",
+      gstin:"12ABCDE1234D12",
     },
   }
 )

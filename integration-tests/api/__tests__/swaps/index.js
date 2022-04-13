@@ -301,6 +301,7 @@ describe("Swaps", () => {
         province: "something",
         city: "ville la something",
         phone: "12353245",
+        gstin: "12ABCDE1234D12",
       },
     })
     await api.post(`/store/carts/${cartId}/shipping-methods`, {

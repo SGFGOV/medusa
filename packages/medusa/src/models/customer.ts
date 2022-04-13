@@ -52,6 +52,9 @@ export class Customer {
   @Column({ nullable: true })
   phone: string
 
+  @Column({ nullable: true })
+  gstin: string
+
   @Column({ default: false })
   has_account: boolean
 
@@ -122,7 +125,10 @@ export class Customer {
  *     type: string
  *   phone:
  *     type: string
- *   has_account:
+ *   gstin:
+ *     type: string
+ *   
+ *  has_account:
  *     type: boolean
  *   created_at:
  *     type: string

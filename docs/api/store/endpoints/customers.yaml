@@ -45,6 +45,10 @@ endpoints:
       - name: phone
         type: String
         description: The customer's phone number.
+      - name: gstin
+        type: String
+        description: The customer's gstin number.
+    
     description: >
       Creates a customer profile with the given details. If the email has been
       used on previous orders the newly created Customer profile will be able to
@@ -81,6 +85,9 @@ endpoints:
       - name: phone
         type: String
         description: The Customer's phone number.
+      - name: gstin
+        type: String
+        description: The Customer's GST number.
     description: >
       Updates the customer's details. The customer identified by `id` must be
       authenticated in order to call this endpoint.
@@ -185,6 +192,7 @@ response: |
         "province": "CA",
         "postal_code": "90046",
         "phone": null,
+        "gstin": null,
         "created_at": "2020-12-11T17:03:54.458Z",
         "updated_at": "2020-12-11T17:03:54.458Z",
         "deleted_at": null,
@@ -203,12 +211,14 @@ response: |
         "province": "CA",
         "postal_code": "90046",
         "phone": null,
+        "gstin": null,
         "created_at": "2020-12-11T17:03:54.458Z",
         "updated_at": "2020-12-11T17:03:54.458Z",
         "deleted_at": null,
         "metadata": null
       }],
       "phone": "4242424242",
+      "gstin": "23ALABC1238P12",
       "has_account": false,
       "orders": [{
         "id": "order_fi13oadpo2r3vc2g4592",

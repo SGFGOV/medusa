@@ -90,6 +90,30 @@ describe("CustomerService", () => {
       expect(result.id).toEqual(IdMap.getId("ironman"))
     })
   })
+  describe("retrieveByGstin", () => {
+    const customerRepository = MockRepository({
+      findOne: () => Promise.resolve({ id: IdMap.getId("ironman") }),
+    })
+    const customerService = new CustomerService({
+      manager: MockManager,
+      customerRepository,
+    })
+
+    beforeEach(async () => {
+      jest.clearAllMocks()
+    })
+
+    it("successfully retrieves a customer by email", async () => {
+      const result = await customerService.retrieveByGstin("12341234")
+
+      expect(customerRepository.findOne).toHaveBeenCalledTimes(1)
+      expect(customerRepository.findOne).toHaveBeenCalledWith({
+        where: { gstin: "12ABCDE1234D12" },
+      })
+
+      expect(result.id).toEqual(IdMap.getId("ironman"))
+    })
+  })
 
   describe("create", () => {
     const customerRepository = MockRepository({
@@ -232,6 +256,7 @@ describe("CustomerService", () => {
           country_code: "DK",
           postal_code: "2100",
           phone: "+1 (222) 333 4444",
+          gstin:"12ABCDE1234D12",
         },
       })
 
@@ -248,6 +273,7 @@ describe("CustomerService", () => {
           country_code: "dk",
           postal_code: "2100",
           phone: "+1 (222) 333 4444",
+          gstin:"12ABCDE1234D12",
         },
       })
     })
@@ -313,6 +339,7 @@ describe("CustomerService", () => {
             country_code: "us",
             postal_code: "90046",
             phone: "+1 (222) 333 4444",
+            gstin:"12ABCDE1234D12",
           }
         )
 
@@ -326,6 +353,7 @@ describe("CustomerService", () => {
           country_code: "us",
           postal_code: "90046",
           phone: "+1 (222) 333 4444",
+          gstin:"12ABCDE1234D12",
         })
       })
 

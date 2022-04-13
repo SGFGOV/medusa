@@ -135,6 +135,7 @@ describe("POST /store/customers/me", () => {
             country_code: "dk",
             postal_code: "2100",
             phone: "+1 (222) 333 4444",
+            gstin: "12ABCDE1234D12",
           },
         },
         clientSession: {
@@ -162,6 +163,7 @@ describe("POST /store/customers/me", () => {
             country_code: "dk",
             postal_code: "2100",
             phone: "+1 (222) 333 4444",
+            gstin: "12ABCDE1234D12",
           },
         }
       )

@@ -16,6 +16,7 @@ describe("POST /store/carts/:id", () => {
       province: "CA",
       postal_code: "91092",
       phone: "+1 (222) 333 4444",
+      gstin: "12ABCDE1234D12",
     }
 
     beforeAll(async () => {

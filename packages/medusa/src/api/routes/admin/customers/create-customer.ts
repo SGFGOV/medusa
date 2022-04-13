@@ -50,6 +50,8 @@ export class AdminPostCustomersReq {
   @IsString()
   @IsOptional()
   phone?: string
+  @IsOptional()
+  gstin?: string
 
   @IsObject()
   @IsOptional()
