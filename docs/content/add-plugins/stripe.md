@@ -12,9 +12,7 @@ You can also follow our video guide to learn how the setup works:
   </video>
 </div>
 
-## Overview
-
-[Stripe](https://stripe.com/) is a battle-tested and unified platform for transaction handling. Stripe supplies you with the technical components needed to handle transactions safely and all the analytical features necessary to gain insight into your sales. These features are also available in a safe test environment which allows for a concern-free development process.
+### Introduction
 
 Using the `medusa-payment-stripe` plugin, this guide shows you how to set up your Medusa project with Stripe as a payment provider.
 
