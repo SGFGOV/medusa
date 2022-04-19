@@ -1,6 +1,8 @@
 import { BaseService } from "medusa-interfaces"
 import { INCLUDE_PRESENTMENT_PRICES } from "../utils/const"
 
+
+
 class ShopifyService extends BaseService {
   constructor(
     {
@@ -115,11 +117,11 @@ class ShopifyService extends BaseService {
 
       await this.collectionService_
         .withTransaction(manager)
-        .createCustomCollections(collects, customCollections, resolvedProducts_withMetafields)
+        .createCustomCollections(collects, customCollections, resolvedProducts)
 
       await this.collectionService_
         .withTransaction(manager)
-        .createSmartCollections(smartCollections, resolvedProducts_withMetafields)
+        .createSmartCollections(smartCollections, resolvedProducts)
     })
   }
 
