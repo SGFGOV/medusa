@@ -113,14 +113,13 @@ class ShopifyProductService extends BaseService {
       
      
       
-      console.log(`waiting for shopify ${data.id}`)
-      await new Promise(r => setTimeout(r, 2500));/*rate limiting*/
+   
       
       const normalizedProduct = this.normalizeProduct_(data)
       normalizedProduct.profile_id = await this.getShippingProfile_(
         normalizedProduct.is_giftcard
       )
-      normalizedProduct.metadata.additional_metafields = product_metafields
+     
       let variants = normalizedProduct.variants
       delete normalizedProduct.variants
 
@@ -170,7 +169,7 @@ class ShopifyProductService extends BaseService {
 
       for (const key of Object.keys(normalized)) {
         if (normalized[key] !== existing[key]) {
-          update[key] = _.deepClone(normalized[key])
+          update[key] = (normalized[key])
         }
       }
 
