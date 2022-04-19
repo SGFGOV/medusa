@@ -224,11 +224,11 @@ class ShopifyCollectionService extends BaseService {
     const { column, relation, condition } = rule
 
     if (column === "title") {
-      return this.testTextRelation_(product.title, relation, condition)
+      return this.testTextRelation_(product?.title, relation, condition)
     }
 
     if (column === "type") {
-      return this.testTextRelation_(product.type.value, relation, condition)
+      return this.testTextRelation_(product?.type?.value, relation, condition)
     }
 
     if (column === "vendor") {

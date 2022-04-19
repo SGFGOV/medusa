@@ -1,4 +1,5 @@
 import { BaseService } from "medusa-interfaces"
+import Logger from "../loaders/logger"
 import { INCLUDE_PRESENTMENT_PRICES } from "../utils/const"
 
 
@@ -84,10 +85,11 @@ class ShopifyService extends BaseService {
         null,
         updatedSinceQuery
       )
-
+      
       const resolvedProducts = await Promise.all(
         products.map(async (product) => {
           try{
+            Logger.info(`processing ${product.title} `)
           return await this.productService_
             .withTransaction(manager)
             .create(product)
@@ -102,9 +104,12 @@ class ShopifyService extends BaseService {
       const resolvedProducts_withMetafields = await Promise.all(
         products.map(async (product) => {
         try{
-          return await this.productService_
+          Logger.info(`processing ${product.title} metafields`)
+          let result = await this.productService_
             .withTransaction(manager)
             .createMetafields(product)
+            Logger.info(`processing ${result.metadata} metafields`)
+            return result
         }
         catch (e)
         {
