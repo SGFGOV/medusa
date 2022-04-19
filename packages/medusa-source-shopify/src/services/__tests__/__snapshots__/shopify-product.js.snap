@@ -12,6 +12,7 @@ Object {
   ],
   "is_giftcard": false,
   "metadata": Object {
+    "additional_metafields": Object {},
     "vendor": "Apple",
   },
   "options": Array [

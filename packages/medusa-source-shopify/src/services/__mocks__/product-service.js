@@ -1,4 +1,4 @@
-import { medusaProducts } from "./test-products"
+import { medusaProducts,shopifyMetaFields } from "./test-products"
 
 export const ProductServiceMock = {
   withTransaction: function () {
@@ -10,11 +10,14 @@ export const ProductServiceMock = {
     }
   }),
   update: jest.fn().mockImplementation((_id, _update) => {
-    return Promise.resolve(medusaProducts.ipod)
+    return Promise.resolve(medusaProducts.ipod_with_metafields)
   }),
   retrieveByExternalId: jest.fn().mockImplementation((id) => {
     if (id === "shopify_ipod") {
-      return Promise.resolve(medusaProducts.ipod)
+      return Promise.resolve(
+       medusaProducts.ipod
+              
+        )
     }
     if (id === "shopify_deleted") {
       return Promise.resolve(medusaProducts.ipod)
@@ -27,6 +30,9 @@ export const ProductServiceMock = {
     }
   }),
   addOption: jest.fn().mockImplementation((_id, _title) => {
+    return Promise.resolve()
+  }),
+  updateOption: jest.fn().mockImplementation((_id, match_id,{}) => {
     return Promise.resolve()
   }),
 }

@@ -164,7 +164,7 @@ class ShopifyCollectionService extends BaseService {
 
   getCustomCollectionProducts_(shCollectionId, collects, products) {
     const medusaProductIds = products.reduce((prev, curr) => {
-      if (curr.external_id) {
+      if (curr?.external_id) {
         prev[curr.external_id] = curr.id
       }
 
