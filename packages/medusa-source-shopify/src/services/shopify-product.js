@@ -2,6 +2,7 @@ import axios from "axios"
 import isEmpty from "lodash/isEmpty"
 import omit from "lodash/omit"
 import random from "lodash/random"
+import Logger from "../loaders/logger"
 import { MedusaError } from "medusa-core-utils"
 import { BaseService } from "medusa-interfaces"
 import { parsePrice } from "../utils/parse-price"
@@ -78,10 +79,11 @@ class ShopifyProductService extends BaseService {
 
       if (existingProduct) {
         const product_metafields = await this.shopify_.get({path:`products/${data.id}/metafields.json`})
+        Logger.info(`Processing ${data.id} ${data.title}`)
         return await this.update(existingProduct, data,product_metafields)
       }
 
-      
+    return existingProduct
     })
    }
   /**
@@ -107,14 +109,6 @@ class ShopifyProductService extends BaseService {
       if (existingProduct) {
         return await this.update(existingProduct, data)
       }
-      //inserted to support product metafields in shopify plugin
-    //  console.log(`waiting for shopify ${data.id}`)
-    //  await new Promise(r => setTimeout(r, 2500));/*rate limiting*/
-      
-     
-      
-   
-      
       const normalizedProduct = this.normalizeProduct_(data)
       normalizedProduct.profile_id = await this.getShippingProfile_(
         normalizedProduct.is_giftcard
