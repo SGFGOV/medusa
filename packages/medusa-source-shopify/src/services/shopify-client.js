@@ -1,10 +1,13 @@
 import { DataType } from "@shopify/shopify-api"
+
 import { BaseService } from "medusa-interfaces"
 import { createClient } from "../utils/create-client"
 import { pager } from "../utils/pager"
+import  _  from "lodash" 
 
 class ShopifyClientService extends BaseService {
   // eslint-disable-next-line no-empty-pattern
+  
   constructor({}, options) {
     super()
 
@@ -15,7 +18,8 @@ class ShopifyClientService extends BaseService {
   }
 
   get(params) {
-    return this.client_.get(params)
+    const SHOPIFY_RATE_LIMIT_MS = 2000
+    return _.throttle(this.client_.get(params),SHOPIFY_RATE_LIMIT_MS)
   }
 
   async list(path, extraHeaders = null, extraQuery = {}) {

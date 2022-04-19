@@ -1,3 +1,5 @@
+
+import  _  from "lodash" 
 export async function pager(
   client,
   path,
@@ -7,6 +9,7 @@ export async function pager(
   let objects = []
   let nextPage = null
   let hasNext = true
+  const SHOPIFY_RATE_LIMIT_MS = 2000
 
   while (hasNext) {
     const params = {
@@ -26,7 +29,7 @@ export async function pager(
       delete params.query.page_info
     }
 
-    const response = await client.get(params)
+    const response = await _.throttle(client.get(params),SHOPIFY_RATE_LIMIT_MS)
 
     objects = [...objects, ...response.body[path]]
 

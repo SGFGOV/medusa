@@ -1,4 +1,4 @@
-import { shopifyProducts } from "./test-products"
+import { shopifyProducts,shopifyMetaFields } from "./test-products"
 
 export const ShopifyClientServiceMock = {
   get: jest.fn().mockImplementation((params) => {
@@ -23,6 +23,20 @@ export const ShopifyClientServiceMock = {
             variants: shopifyProducts.ipod.variants.slice(1, -1),
           },
         },
+      })
+    }
+    if (params.path === "products/632910392/metafields.json") {
+      return Promise.resolve({
+        
+          shopifyMetaFields
+        
+      })
+    }
+    if (params.path === "products/shopify_ipod/metafields.json") {
+      return Promise.resolve({
+       
+          shopifyMetaFields
+        
       })
     }
   }),

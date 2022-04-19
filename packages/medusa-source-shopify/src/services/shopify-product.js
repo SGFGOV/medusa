@@ -57,10 +57,37 @@ class ShopifyProductService extends BaseService {
   }
 
   /**
+   * creates the product metafields in medusa based on product metafields in shopify.
+   * Also adds the product to a collection if a collection id is provided
+   * @param {object} data
+   * @return {Product} the updated product
+   */
+   async createMetafields(data) {
+    return this.atomicPhase_(async (manager) => {
+      const ignore = await this.redis_.shouldIgnore(data.id, "product.created")
+      if (ignore) {
+        return
+      }
+
+      const existingProduct = await this.productService_
+        .withTransaction(manager)
+        .retrieveByExternalId(data.id, {
+          relations: ["variants", "options","metadata"],
+        })
+        .catch((_) => undefined)
+
+      if (existingProduct) {
+        const product_metafields = await this.shopify_.get({path:`products/${data.id}/metafields.json`})
+        return await this.update(existingProduct, data,product_metafields)
+      }
+
+      
+    })
+   }
+  /**
    * Creates a product based on an event in Shopify.
    * Also adds the product to a collection if a collection id is provided
    * @param {object} data
-   * @param {string} collectionId optional
    * @return {Product} the created product
    */
   async create(data) {
@@ -73,19 +100,27 @@ class ShopifyProductService extends BaseService {
       const existingProduct = await this.productService_
         .withTransaction(manager)
         .retrieveByExternalId(data.id, {
-          relations: ["variants", "options"],
+          relations: ["variants", "options","metadata"],
         })
         .catch((_) => undefined)
 
       if (existingProduct) {
         return await this.update(existingProduct, data)
       }
-
+      //inserted to support product metafields in shopify plugin
+    //  console.log(`waiting for shopify ${data.id}`)
+    //  await new Promise(r => setTimeout(r, 2500));/*rate limiting*/
+      
+     
+      
+      console.log(`waiting for shopify ${data.id}`)
+      await new Promise(r => setTimeout(r, 2500));/*rate limiting*/
+      
       const normalizedProduct = this.normalizeProduct_(data)
       normalizedProduct.profile_id = await this.getShippingProfile_(
         normalizedProduct.is_giftcard
       )
-
+      normalizedProduct.metadata.additional_metafields = product_metafields
       let variants = normalizedProduct.variants
       delete normalizedProduct.variants
 
@@ -112,7 +147,7 @@ class ShopifyProductService extends BaseService {
     })
   }
 
-  async update(existing, shopifyUpdate) {
+  async update(existing, shopifyUpdate,product_metafields={}) {
     return this.atomicPhase_(async (manager) => {
       const ignore = await this.redis_.shouldIgnore(
         shopifyUpdate.id,
@@ -121,9 +156,9 @@ class ShopifyProductService extends BaseService {
       if (ignore) {
         return
       }
-
+      //const product_metafields = await this.shopify_.get({path:`products/${existing.external_id}/metafields.json`})
       const normalized = this.normalizeProduct_(shopifyUpdate)
-
+      normalized.metadata.additional_metafields = product_metafields
       existing = await this.addProductOptions_(existing, normalized.options)
 
       await this.updateVariants_(existing, normalized.variants)
@@ -135,7 +170,7 @@ class ShopifyProductService extends BaseService {
 
       for (const key of Object.keys(normalized)) {
         if (normalized[key] !== existing[key]) {
-          update[key] = normalized[key]
+          update[key] = _.deepClone(normalized[key])
         }
       }
 
@@ -444,6 +479,7 @@ class ShopifyProductService extends BaseService {
       status: "proposed",
       metadata: {
         vendor: product.vendor,
+        additional_metafields:{}
       },
     }
   }
