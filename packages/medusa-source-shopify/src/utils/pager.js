@@ -29,7 +29,7 @@ export async function pager(
       delete params.query.page_info
     }
 
-    const response = await _.throttle(client.get(params),SHOPIFY_RATE_LIMIT_MS)
+    const response = await client.get(params)
 
     objects = [...objects, ...response.body[path]]
 
