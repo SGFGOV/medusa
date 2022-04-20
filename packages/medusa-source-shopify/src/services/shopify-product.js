@@ -65,10 +65,10 @@ class ShopifyProductService extends BaseService {
    */
    async createMetafields(data) {
     return this.atomicPhase_(async (manager) => {
-      const ignore = await this.redis_.shouldIgnore(data.id, "product.created")
+      /*const ignore = await this.redis_.shouldIgnore(data.id, "product.created")
       if (ignore) {
         return
-      }
+      }*/
 
       const existingProduct = await this.productService_
         .withTransaction(manager)
@@ -78,7 +78,7 @@ class ShopifyProductService extends BaseService {
         .catch((_) => undefined)
 
       if (existingProduct) {
-        const product_metafields = await this.shopify_.get({path:`products/${data.id}/metafields.json`})
+        const product_metafields = await this.shopify_.get({path:`products/${data.external_id}/metafields.json`})
         Logger.info(`Processing ${data.id} ${data.title}`)
         return await this.update(existingProduct, data,product_metafields)
       }
@@ -93,12 +93,13 @@ class ShopifyProductService extends BaseService {
    * @return {Product} the created product
    */
   async create(data) {
+    Logger.info(`attempting to create ${data.id} ${data.title}`)
     return this.atomicPhase_(async (manager) => {
       const ignore = await this.redis_.shouldIgnore(data.id, "product.created")
       if (ignore) {
         return
       }
-
+      Logger.info(`checking if  ${data.id} ${data.title} exists`)
       const existingProduct = await this.productService_
         .withTransaction(manager)
         .retrieveByExternalId(data.id, {
@@ -107,6 +108,7 @@ class ShopifyProductService extends BaseService {
         .catch((_) => undefined)
 
       if (existingProduct) {
+        Logger.info(`updating existing  ${data.id} ${data.title} `)
         return await this.update(existingProduct, data)
       }
       const normalizedProduct = this.normalizeProduct_(data)
@@ -116,11 +118,11 @@ class ShopifyProductService extends BaseService {
      
       let variants = normalizedProduct.variants
       delete normalizedProduct.variants
-
+      Logger.info(`creating new product  ${data.id} ${data.title} `)
       const product = await this.productService_
         .withTransaction(manager)
         .create(normalizedProduct)
-
+        Logger.info(`creating new variants  ${data.id} ${data.title} `)
       if (variants) {
         variants = variants.map((v) =>
           this.addVariantOptions_(v, product.options)
@@ -135,7 +137,7 @@ class ShopifyProductService extends BaseService {
       }
 
       await this.redis_.addIgnore(data.id, "product.created")
-
+      Logger.info(`the new product: ${JSON.stringify(product)}`)
       return product
     })
   }
@@ -149,6 +151,7 @@ class ShopifyProductService extends BaseService {
       if (ignore) {
         return
       }
+      Logger.info(`the existing product: ${JSON.stringify(existing?.title)}`)
       //const product_metafields = await this.shopify_.get({path:`products/${existing.external_id}/metafields.json`})
       const normalized = this.normalizeProduct_(shopifyUpdate)
       normalized.metadata.additional_metafields = product_metafields
@@ -160,7 +163,7 @@ class ShopifyProductService extends BaseService {
       delete normalized.options
 
       const update = {}
-
+      
       for (const key of Object.keys(normalized)) {
         if (normalized[key] !== existing[key]) {
           update[key] = (normalized[key])
