@@ -88,45 +88,38 @@ class ShopifyService extends BaseService {
       
       const resolvedProducts = await Promise.all(
         products.map(async (product) => {
-          try{
+          
             Logger.info(`processing ${product.title} `)
           return await this.productService_
             .withTransaction(manager)
             .create(product)
-        }
-        catch (e)
-        {
-          console.log (e)
-        }
+       
+      
+      
 
       })
       )
       const resolvedProducts_withMetafields = await Promise.all(
-        products.map(async (product) => {
-        try{
+        resolvedProducts.map(async (product) => {
+        
           Logger.info(`processing ${product.title} metafields`)
           let result = await this.productService_
             .withTransaction(manager)
             .createMetafields(product)
             Logger.info(`processing ${result.metadata} metafields`)
             return result
-        }
-        catch (e)
-        {
-          console.log (e)
-        }
-
+       
       })
       )
 
 
       await this.collectionService_
         .withTransaction(manager)
-        .createCustomCollections(collects, customCollections, resolvedProducts)
+        .createCustomCollections(collects, customCollections, resolvedProducts_withMetafields)
 
       await this.collectionService_
         .withTransaction(manager)
-        .createSmartCollections(smartCollections, resolvedProducts)
+        .createSmartCollections(smartCollections, resolvedProducts_withMetafields)
     })
   }
 
