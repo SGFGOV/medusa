@@ -1,24 +1,19 @@
 {
-  "name": "medusa-plugin-gstin",
-  "version": "1.3.0",
+  "name": "medusa-extender-plugin-gsitn",
+  "version": "1.0.0",
   "description": "",
-  "author": "govind diwakar",
+  "private": true,
+  "author": "SGFGOV <sgf0@sourcegoodfood.com>",
   "homepage": "https://github.com/SGFGOV/medusa",
   "license": "MIT",
   "main": "dist/index.js",
   "files": [
-    "src"
-  ],
-  "keywords": [
-    "medusa",
-    "gst",
-    "india",
-    "gstin"
+    "dist"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/SGFGOV/medusa",
-    "directory": "packages/medusa-plugin-gstin"
+    "directory": "packages/medusa-extender-plugin-gstin"
   },
   "scripts": {
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p tsconfig.json",
@@ -27,7 +22,7 @@
     "test:cov": "NODE_ENV=test jest --coverage --detectOpenHandles"
   },
   "peerDependencies": {
-    "medusa-extender": "^1.5.2",
+    "medusa-extender": "^1.6.5",
     "awilix": "^4.2.3",
     "@medusajs/medusa": "^1.2.1",
     "medusa-core-utils": "^1.1.31",
@@ -47,7 +42,7 @@
     "jest": "^27.3.1",
     "medusa-core-utils": "^1.1.31",
     "medusa-interfaces": "^1.2.1",
-    "medusa-extender": "^1.6.1",
+    "medusa-extender": "^1.6.5",
     "prettier": "^2.5.0",
     "reflect-metadata": "^0.1.13",
     "supertest": "^6.1.6",
