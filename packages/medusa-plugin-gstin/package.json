@@ -1,6 +1,6 @@
 {
   "name": "medusa-plugin-gstin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "author": "govind diwakar",
   "homepage": "https://github.com/SGFGOV/medusa",
@@ -9,7 +9,12 @@
   "files": [
     "dist"
   ],
-  "keywords": ["medusa","gst","india","gstin"],
+  "keywords": [
+    "medusa",
+    "gst",
+    "india",
+    "gstin"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/SGFGOV/medusa",
