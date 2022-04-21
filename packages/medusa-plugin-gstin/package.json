@@ -2,7 +2,7 @@
   "name": "medusa-plugin-gstin",
   "version": "0.0.0",
   "description": "",
-  "private": true,
+  "private": false,
   "author": "govind diwakar",
   "homepage": "https://github.com/SGFGOV/medusa",
   "license": "MIT",
