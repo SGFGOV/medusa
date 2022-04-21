@@ -10,6 +10,10 @@ You should have setup the medusa extender and run medex init as described [here]
 ```
 npm install medusa-plugin-gstin
 ```
+or
+```
+npm install --legacy-peer-deps medusa-plugin-gstin
+```
 ## Configure
 
 add the module to your main.ts 
