@@ -12,13 +12,13 @@ npm install medusa-plugin-gstin
 ```
 or
 ```
-npm install --legacy-peer-deps medusa-plugin-gstin
+npm install --legacy-peer-deps medusa-extender-plugin-gstin
 ```
 ## Configure
 
 add the module to your main.ts 
 ```
-import { AddressModule } from 'medusa-plugin-gstin/src/modules/address/address.module'
+import { AddressModule } from 'medusa-extender-plugin-gstin/dist/modules/address/address.module'
 ```
 add the address module to 
 ```
