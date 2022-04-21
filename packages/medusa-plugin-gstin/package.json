@@ -1,0 +1,56 @@
+{
+  "name": "medusa-plugin-gstin",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "author": "govind diwakar",
+  "homepage": "https://github.com/SGFGOV/medusa",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medusajs/medusa",
+    "directory": "packages/medusa-plugin-gstin"
+  },
+  "scripts": {
+    "build": "rm -rf dist && ./node_modules/.bin/tsc -p tsconfig.json",
+    "test": "NODE_ENV=test jest --detectOpenHandles",
+    "test:watch": "NODE_ENV=test jest --watch --detectOpenHandles",
+    "test:cov": "NODE_ENV=test jest --coverage --detectOpenHandles"
+  },
+  "peerDependencies": {
+    "medusa-extender": "^1.5.2",
+    "awilix": "^4.2.3",
+    "@medusajs/medusa": "^1.2.1",
+    "medusa-core-utils": "^1.1.31",
+    "medusa-interfaces": "^1.2.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.41"
+  },
+  "devDependencies": {
+    "@golevelup/ts-jest": "^0.3.2",
+    "@medusajs/medusa": "^1.1.62",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.12",
+    "awilix": "^4.2.3",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.3.1",
+    "medusa-core-utils": "^1.1.31",
+    "medusa-interfaces": "^1.2.1",
+    "medusa-extender": "^1.6.1",
+    "prettier": "^2.5.0",
+    "reflect-metadata": "^0.1.13",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.7",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.12.0",
+    "typeorm": "^0.2.41",
+    "typescript": "^4.5.2"
+  }
+}
