@@ -10,6 +10,7 @@
   "files": [
     "dist"
   ],
+  "keywords": ["medusa","gst","india","gstin"],
   "repository": {
     "type": "git",
     "url": "https://github.com/medusajs/medusa",
