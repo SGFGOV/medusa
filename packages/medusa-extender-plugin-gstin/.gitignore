@@ -6,7 +6,8 @@
 !index.js
 yarn.lock
 
-./dist
+./dist/
+dist/
 
 ./api
 ./services
