@@ -2,7 +2,6 @@
   "name": "medusa-extender-plugin-gsitn",
   "version": "1.0.0",
   "description": "",
-  "private": true,
   "author": "SGFGOV <sgf0@sourcegoodfood.com>",
   "homepage": "https://github.com/SGFGOV/medusa",
   "license": "MIT",
