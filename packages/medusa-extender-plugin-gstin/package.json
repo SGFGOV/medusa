@@ -1,6 +1,6 @@
 {
   "name": "medusa-extender-plugin-gstin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "author": "SGFGOV <sgf0@sourcegoodfood.com>",
   "homepage": "https://github.com/SGFGOV/medusa",
@@ -46,5 +46,8 @@
     "tsconfig-paths": "^3.12.0",
     "typeorm": "^0.2.41",
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "sgf-gstin-validator": "^1.0.1"
   }
 }
