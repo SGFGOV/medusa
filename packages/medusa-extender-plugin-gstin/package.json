@@ -1,5 +1,5 @@
 {
-  "name": "medusa-extender-plugin-gsitn",
+  "name": "medusa-extender-plugin-gstin",
   "version": "1.0.0",
   "description": "",
   "author": "SGFGOV <sgf0@sourcegoodfood.com>",
@@ -21,8 +21,8 @@
     "test:cov": "NODE_ENV=test jest --coverage --detectOpenHandles"
   },
   "peerDependencies": {
-    "medusa-extender": "^1.6.5",
     "medusa-core-utils": "^1.1.31",
+    "medusa-extender": "^1.6.5",
     "medusa-interfaces": "^1.2.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.41"
