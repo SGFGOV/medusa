@@ -1,20 +1,19 @@
 import { Validator } from 'medusa-extender';
-import { AdminPostOrdersReq } from '@medusajs/medusa/dist/api/routes/admin/orders/create-order'
 import {AddressPayload} from '@medusajs/medusa/dist/types/common'
 import { IsString } from 'class-validator';
-import {isValidGSTNumber} from 'sgf-gstin-validator'
+//import {isValidGSTNumber} from 'sgf-gstin-validator'
 
-function IsGstin()
+/*export function IsGstin()
 {
-  return function(targetClass: any, propertyKey: string, descriptor?: TypedPropertyDescriptor<() => void>) :  any {
-    return isValidGSTNumber(targetClass[propertyKey])
+  return function(targetClass: any, propertyKey:any, descriptor?: TypedPropertyDescriptor<() => void>) :  any {
+    return isValidGSTNumber(propertyKey.value)
    }
-}
+}*/
 
 @Validator({ override: AddressPayload })
 export default class AddressValidator extends AddressPayload {
   
-  @IsGstin()
+  //@IsGstin()
   @IsString()
   gstin: string;
 }
