@@ -22,10 +22,19 @@
       "@modules/*": [
         "modules/*"
       ]
-    }
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types"
+    ],
   },
   "exclude": [
     "**/node_modules",
     "./dist/**/*"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts" 
   ]
 }

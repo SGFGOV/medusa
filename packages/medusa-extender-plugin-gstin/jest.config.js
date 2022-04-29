@@ -1,12 +1,14 @@
-module.exports = {
+module.exports=  {
 	"moduleFileExtensions": [
 		"js",
 		"json",
-		"ts"
+		"ts",
+		"d.ts"
 	],
 	"preset": 'ts-jest',
 	"rootDir": "src",
-	"testRegex": ".*\\.spec\\.ts$",
+	"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$",
+	"verbose":true,
 	"transformIgnorePatterns": ["/node_modules/"],
 	"collectCoverageFrom": [
 		"**/*.(t|j)s"
