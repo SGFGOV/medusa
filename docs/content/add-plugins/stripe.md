@@ -12,7 +12,9 @@ You can also follow our video guide to learn how the setup works:
   </video>
 </div>
 
-### Introduction
+## Overview
+
+[Stripe](https://stripe.com/) is a battle-tested and unified platform for transaction handling. Stripe supplies you with the technical components needed to handle transactions safely and all the analytical features necessary to gain insight into your sales. These features are also available in a safe test environment which allows for a concern-free development process.
 
 Using the `medusa-payment-stripe` plugin, this guide shows you how to set up your Medusa project with Stripe as a payment provider.
 
@@ -30,7 +32,7 @@ If you don’t have a Medusa server installed yet, you must follow our [quicksta
 
 In the root of your Medusa server, run the following command to install the stripe plugin:
 
-```bash
+```bash npm2yarn
 npm install medusa-payment-stripe
 ```
 
@@ -46,8 +48,8 @@ const plugins = [
   {
     resolve: `medusa-payment-stripe`,
     options: {
-      api_key: STRIPE_API_KEY,
-      webhook_secret: STRIPE_WEBHOOK_SECRET,
+      api_key: process.env.STRIPE_API_KEY,
+      webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
     },
   },
 ];
@@ -55,7 +57,7 @@ const plugins = [
 
 :::note
 
-You might find that this code is already available but commented out. You can proceed with removing the comments instead of adding the code again.
+You might find that this code is already available but commented out. You can proceed with removing the comments instead of adding the code again, but make sure to replace `STRIPE_API_KEY` and `STRIPE_WEBHOOK_SECRET` with `process.env.STRIPE_API_KEY` and `process.env.STRIPE_WEBHOOK_SECRET` respectively.
 
 :::
 
@@ -129,7 +131,7 @@ All storefronts require that you obtain your Stripe’s Publishable Key. You can
 
 Medusa has a Next.js storefront that you can easily use with your Medusa server. If you don’t have the storefront installed, you can follow [this quickstart guide](../starters/nextjs-medusa-starter).
 
-In your `.env` file, add the following variable with its value set to the Publishable Key:
+In your `.env.local` file (or the file you’re using for your environment variables), add the following variable with its value set to the Publishable Key:
 
 ```jsx
 NEXT_PUBLIC_STRIPE_KEY=pk_...
@@ -182,14 +184,14 @@ The integration with stripe must have the following workflow:
 
 Before you start the implementations you need to install the necessary dependencies. You’ll be using Stripe’s React libraries to show the UI and handle the payment confirmation:
 
-```bash
+```bash npm2yarn
 npm install --save @stripe/react-stripe-js @stripe/stripe-js
 ```
 
 You’ll also use Medusa’s JS Client to easily call Medusa’s REST APIs:
 
-```bash
-npm i @medusajs/medusa-js
+```bash npm2yarn
+npm install @medusajs/medusa-js
 ```
 
 #### Initialize Stripe

@@ -96,7 +96,7 @@ The `data` attribute is used to specify any data necessary for fulfilling the 
 
 The `data` attribute does not have any specific format. It’s up to you to choose whatever data is included here.
 
-# Shipping Method
+## Shipping Method
 
 ### Overview
 
@@ -130,4 +130,5 @@ The `ShippingMethod` instance holds a `price` attribute, which will either b
 
 ## What’s Next :rocket:
 
+- [Learn how to Create a Fulfillment Provider.](./add-fulfillment-provider.md)
 - Check out [available shipping plugins](https://github.com/medusajs/medusa/tree/master/packages).
