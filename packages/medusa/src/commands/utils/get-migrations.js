@@ -3,9 +3,8 @@ import path from "path"
 import fs from "fs"
 import { isString } from "lodash"
 import { sync as existsSync } from "fs-exists-cached"
-import { createRequireFromPath } from "medusa-core-utils"
-import Logger from "../../loaders/logger"
-import configLoader from "../../loaders/config"
+import { getConfigFile, createRequireFromPath } from "medusa-core-utils"
+import Logger from "../loaders/logger"
 
 function createFileContentHash(path, files) {
   return path + files
@@ -105,7 +104,8 @@ export default async (directory, featureFlagRouter) => {
     return details
   })
 
-  if (!plugins) {
+  if(!plugins)
+  {
     Logger.warn("Unable to load plugins")
   }
 
