@@ -9,10 +9,21 @@ const errorHandler = isProduction
     }
   : console.log
 
-export default (rootDirectory: string): ConfigModule => {
-  const { configModule } = getConfigFile(rootDirectory, `medusa-config`) as {
+export default async (rootDirectory: string): Promise<ConfigModule> => {
+  /* let configFile =getConfigFile(directory, `medusa-config`)
+  let configuration = await Promise.resolve( configFile)
+  let migrationDirs = await Promise.resolve(getMigrations(directory))*/
+  // let configModule= await Promise.resolve(configuration.configModule)
+
+  const { configModule } = await (async (): Promise<{
     configModule: ConfigModule
-  }
+  }> => {
+    return Promise.resolve(
+      getConfigFile(rootDirectory, `medusa-config`) as {
+        configModule: ConfigModule
+      }
+    )
+  })()
 
   if (!configModule?.projectConfig?.redis_url) {
     console.log(
@@ -50,7 +61,7 @@ export default (rootDirectory: string): ConfigModule => {
     )
   }
 
-  return {
+  return Promise.resolve({
     projectConfig: {
       jwt_secret: jwt_secret ?? "supersecret",
       cookie_secret: cookie_secret ?? "supersecret",
@@ -58,5 +69,5 @@ export default (rootDirectory: string): ConfigModule => {
     },
     featureFlags: configModule?.featureFlags ?? {},
     plugins: configModule?.plugins ?? [],
-  }
+  })
 }

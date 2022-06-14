@@ -9,24 +9,26 @@ type Options = {
   container: AwilixContainer
 }
 
-export default async ({ container, configModule }: Options): Promise<Connection> => {
+export default async ({
+  container,
+  configModule,
+}: Options): Promise<Connection> => {
   const entities = container.resolve("db_entities")
 
   const isSqlite = configModule.projectConfig.database_type === "sqlite"
 
   const connection = await createConnection({
     type: configModule.projectConfig.database_type,
-    //url: configModule.projectConfig.database_url,
-    url:configModule.projectConfig.database_url?configModule.projectConfig.database_url:undefined,
+    url: configModule.projectConfig.database_url
+      ? configModule.projectConfig.database_url
+      : undefined,
     ...{
-        host:configModule.projectConfig.database_host??"",
-        port:configModule.projectConfig.database_port??"",
-        database:configModule.projectConfig.database_database??"",
-        ssl:configModule.projectConfig.database_ssl??{},
-        //host:process.env.RDS_HOSTNAME,
-        //port:process.env.RDS_PORT,
-        username:configModule.projectConfig.database_username??"",
-        password: configModule.projectConfig.database_password??"",
+      host: configModule.projectConfig.database_host ?? "",
+      port: configModule.projectConfig.database_port ?? "",
+      database: configModule.projectConfig.database_database ?? "",
+      ssl: configModule.projectConfig.database_ssl ?? {},
+      username: configModule.projectConfig.database_username ?? "",
+      password: configModule.projectConfig.database_password ?? "",
     },
     database: configModule.projectConfig.database_database,
     extra: configModule.projectConfig.database_extra || {},
