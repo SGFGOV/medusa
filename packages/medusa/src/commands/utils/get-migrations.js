@@ -3,8 +3,9 @@ import path from "path"
 import fs from "fs"
 import { isString } from "lodash"
 import { sync as existsSync } from "fs-exists-cached"
-import { getConfigFile, createRequireFromPath } from "medusa-core-utils"
+import { createRequireFromPath } from "medusa-core-utils"
 import Logger from "../../loaders/logger"
+import configLoader from "../../loaders/config"
 
 function createFileContentHash(path, files) {
   return path + files
