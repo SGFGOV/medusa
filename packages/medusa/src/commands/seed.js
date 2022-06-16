@@ -55,16 +55,7 @@ const t = async function ({ directory, migrate, seedFile }) {
     const migrationDirs = await getMigrations(directory, featureFlagRouter)
     const connection = await createConnection({
       type: configModule.projectConfig.database_type,
-      database: configModule.projectConfig.database_database,
-      url:configModule.projectConfig.database_url?configModule.projectConfig.database_url:undefined,
-      ...{
-        host:configModule.projectConfig.database_host??"",
-        port:configModule.projectConfig.database_port??"",
-        database:configModule.projectConfig.database_database??"",
-        ssl:configModule.projectConfig.database_ssl??{},
-        username:configModule.projectConfig.database_username??"",
-        password: configModule.projectConfig.database_password??"",
-    },
+      ...hostConfig,
       extra: configModule.projectConfig.database_extra || {},
       migrations: migrationDirs,
       logging: true,

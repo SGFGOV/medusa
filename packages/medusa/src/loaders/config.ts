@@ -25,14 +25,15 @@ export default async (rootDirectory: string): Promise<ConfigModule> => {
     )
   })()
 
-   configModule  = await Promise.resolve(configModule)
+  configModule = await Promise.resolve(configModule)
   if (!configModule?.projectConfig?.redis_url) {
     console.log(
       `[medusa-config] ⚠️ redis_url not found. A fake redis instance will be used.`
     )
-  }
-  else{
-    configModule.projectConfig.redis_url = await Promise.resolve(configModule?.projectConfig?.redis_url)
+  } else {
+    configModule.projectConfig.redis_url = await Promise.resolve(
+      configModule?.projectConfig?.redis_url
+    )
   }
 
   let jwt_secret =
@@ -45,8 +46,7 @@ export default async (rootDirectory: string): Promise<ConfigModule> => {
           : " fallback to either cookie_secret or default 'supersecret'."
       }`
     )
-  }
-  else{
+  } else {
     jwt_secret = await Promise.resolve(jwt_secret)
   }
 
@@ -60,8 +60,7 @@ export default async (rootDirectory: string): Promise<ConfigModule> => {
           : " fallback to either cookie_secret or default 'supersecret'."
       }`
     )
-  }
-  else{
+  } else {
     cookie_secret = await Promise.resolve(cookie_secret)
   }
 
