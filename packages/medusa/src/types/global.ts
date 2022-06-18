@@ -42,7 +42,7 @@ export type TlsOptions = {
   rejectUnauthorized: boolean | undefined
 }
 
-export type HostConfig =
+export type DatabaseHostConfig =
   | {
       database?: string
       password?: string | (() => string) | (() => Promise<string>)
