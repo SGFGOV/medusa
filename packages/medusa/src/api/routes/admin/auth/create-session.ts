@@ -6,6 +6,9 @@ import { MedusaError } from "medusa-core-utils"
 import _ from "lodash"
 import jwt from "jsonwebtoken"
 import { validator } from "../../../../utils/validator"
+import { StrategyResolverService } from "../../../../services"
+import { Request, Response } from "express"
+import { AdminPostAuthReq } from "../../../../strategies/admin-authentication"
 
 /**
  * @oas [post] /auth
@@ -103,20 +106,15 @@ export default async (req, res) => {
       expiresIn: "24h",
     })
 
-    const cleanRes = _.omit(result.user, ["password_hash"])
+  const strategyResolver = req.scope.resolve(
+    "strategyResolverService"
+  ) as StrategyResolverService
 
-    res.json({ user: cleanRes })
-  } else {
-    res.sendStatus(401)
-  }
+  const authStrategyType = (req.headers["X-medusa-auth-strategy"] ??
+    "core-admin-default-auth") as string
+
+  const authStrategy = strategyResolver.resolveAuthByType(authStrategyType)
+  await authStrategy.authenticate(req, res)
+}
 }
 
-export class AdminPostAuthReq {
-  @IsEmail()
-  @IsNotEmpty()
-  email: string
-
-  @IsString()
-  @IsNotEmpty()
-  password: string
-}
