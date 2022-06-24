@@ -1,14 +1,15 @@
 import { IsEmail, IsNotEmpty, IsString } from "class-validator"
 
-import AuthService from "../../../../services/auth"
+
 import { EntityManager } from "typeorm"
 import { MedusaError } from "medusa-core-utils"
 import _ from "lodash"
 import jwt from "jsonwebtoken"
 import { validator } from "../../../../utils/validator"
-import { StrategyResolverService } from "../../../../services"
 import { Request, Response } from "express"
 import { AdminPostAuthReq } from "../../../../strategies/admin-authentication"
+import AbstractAuthStrategy from "../../../../interfaces/authentication-strategy"
+import { AuthService, StrategyResolverService } from "../../../../services"
 
 /**
  * @oas [post] /auth
