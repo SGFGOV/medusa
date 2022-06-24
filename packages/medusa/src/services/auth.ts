@@ -204,7 +204,7 @@ class AuthService extends TransactionBaseService {
     })
   }
 
-  async retrieveAuthenticationStrategyToUse(
+  async retrieveAuthenticationStrategy(
     req: Request,
     scope: "admin" | "store"
   ): Promise<AbstractAuthStrategy<never>> {
@@ -220,7 +220,7 @@ class AuthService extends TransactionBaseService {
     })
 
     for (const strategy of userStrategies) {
-      const shouldUse = await strategy.shouldUseStrategy(req)
+      const shouldUse = await strategy.shouldUseStrategy(req, scope)
       if (shouldUse) {
         authStrategy = strategy
         break
