@@ -10,6 +10,7 @@ import { Request, Response } from "express"
 import { AdminPostAuthReq } from "../../../../strategies/admin-authentication"
 import AbstractAuthStrategy from "../../../../interfaces/authentication-strategy"
 import { AuthService, StrategyResolverService } from "../../../../services"
+import { IsEmail, IsNotEmpty, IsString } from "class-validator"
 
 /**
  * @oas [post] /auth
@@ -117,5 +118,15 @@ export default async (req, res) => {
   const authStrategy = strategyResolver.resolveAuthByType(authStrategyType)
   await authStrategy.authenticate(req, res)
 }
+}
+
+export class AdminPostAuthReq {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string
+
+  @IsString()
+  @IsNotEmpty()
+  password: string
 }
 
