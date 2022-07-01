@@ -9,10 +9,23 @@ const errorHandler = isProduction
     }
   : console.log
 
-export default (rootDirectory: string): ConfigModule => {
-  const { configModule } = getConfigFile(rootDirectory, `medusa-config`) as {
+export default async (rootDirectory: string): Promise<ConfigModule> => {
+  const configuration = getConfigFile(rootDirectory, `medusa-config`) as {
     configModule: ConfigModule
+    configFilePath: string
   }
+  const resolveConfigProperties = async (obj): Promise<ConfigModule> => {
+    for (const key of Object.keys(obj)) {
+      if (typeof obj[key] === "object" && obj[key] !== null) {
+        await resolveConfigProperties(obj[key])
+      }
+      if (typeof obj[key] === "function") {
+        obj[key] = await obj[key]()
+      }
+    }
+    return obj
+  }
+  const configModule = await resolveConfigProperties(configuration.configModule)
 
   if (!configModule?.projectConfig?.redis_url) {
     console.log(
