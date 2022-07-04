@@ -50,6 +50,7 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "sgf-gstin-validator": "^1.0.5"
+    "sgf-gstin-validator": "^1.0.5",
+    "@medusajs/medusa": "^1.3.2"
   }
 }
