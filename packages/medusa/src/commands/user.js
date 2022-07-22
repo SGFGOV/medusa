@@ -6,7 +6,7 @@ import { track } from "medusa-telemetry"
 
 import loaders from "../loaders"
 
-export default async function({ directory, id, email, password, keepAlive }) {
+export default async function ({ directory, id, email, password, keepAlive }) {
   track("CLI_USER", { with_id: !!id })
   const app = express()
   try {
@@ -19,7 +19,11 @@ export default async function({ directory, id, email, password, keepAlive }) {
     await userService.create({ id, email }, password)
   } catch (err) {
     console.error(err)
-    process.exit(1)
+    if (process.env.AWS_ENABLED) {
+      process.exit()
+    } else {
+      process.exit(1)
+    }
   }
 
   track("CLI_USER_COMPLETED", { with_id: !!id })
