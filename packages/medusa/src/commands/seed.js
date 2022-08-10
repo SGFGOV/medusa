@@ -46,8 +46,6 @@ const t = async function ({ directory, migrate, seedFile }) {
     }
   }
 
-  const { configModule } = getConfigFile(directory, `medusa-config`)
-
   const featureFlagRouter = featureFlagLoader(configModule)
 
   const dbType = configModule.projectConfig.database_type

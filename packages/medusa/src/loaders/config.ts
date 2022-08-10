@@ -14,8 +14,23 @@ export default async (rootDirectory: string): Promise<ConfigModule> => {
   let configuration = await Promise.resolve( configFile)
   let migrationDirs = await Promise.resolve(getMigrations(directory))*/
   // let configModule= await Promise.resolve(configuration.configModule)
-
-  const { configModule } = await (async (): Promise<{
+  const configuration = getConfigFile(rootDirectory, `medusa-config`) as {
+    configModule: ConfigModule
+    configFilePath: string
+  }
+  const resolveConfigProperties = async (obj): Promise<ConfigModule> => {
+    for (const key of Object.keys(obj)) {
+      if (typeof obj[key] === "object" && obj[key] !== null) {
+        await resolveConfigProperties(obj[key])
+      }
+      if (typeof obj[key] === "function") {
+        obj[key] = await obj[key]()
+      }
+    }
+    return obj
+  }
+  const configModule = await resolveConfigProperties(configuration.configModule)
+  /* const { configModule } = await (async (): Promise<{
     configModule: ConfigModule
   }> => {
     return Promise.resolve(
@@ -23,7 +38,7 @@ export default async (rootDirectory: string): Promise<ConfigModule> => {
         configModule: ConfigModule
       }
     )
-  })()
+  })()*/
 
   if (!configModule?.projectConfig?.redis_url) {
     console.log(
