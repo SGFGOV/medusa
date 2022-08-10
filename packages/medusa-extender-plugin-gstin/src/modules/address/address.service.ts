@@ -33,7 +33,7 @@ export default class AddressService extends MedusaOrderService {
   private readonly addressRepository: typeof AddressRepository
   private readonly eventBus: EventBusService
 
-  constructor(private readonly container: ConstructorParams) {
+  constructor(readonly container: ConstructorParams) {
     super(container)
     this.manager = container.manager
     this.addressRepository = container.addressRepository
