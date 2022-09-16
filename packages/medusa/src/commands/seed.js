@@ -3,9 +3,9 @@ import fs from "fs"
 import express from "express"
 import { createConnection } from "typeorm"
 import { sync as existsSync } from "fs-exists-cached"
-import { getConfigFile } from "medusa-core-utils"
 import { track } from "medusa-telemetry"
 
+import configLoader from "../loaders/config"
 import Logger from "../loaders/logger"
 import loaders from "../loaders"
 
@@ -28,8 +28,23 @@ const t = async function ({ directory, migrate, seedFile }) {
       process.exit(1)
     }
   }
+  const configModule = await configLoader(directory)
 
-  const { configModule } = getConfigFile(directory, `medusa-config`)
+  let hostConfig = {
+    database: configModule.projectConfig.database_database,
+    url: configModule.projectConfig.database_url,
+  }
+
+  if (configModule.projectConfig.database_host) {
+    hostConfig = {
+      host: configModule.projectConfig.database_host,
+      port: configModule.projectConfig.database_port,
+      database: configModule.projectConfig.database_database,
+      ssl: configModule.projectConfig.database_ssl,
+      username: configModule.projectConfig.database_username,
+      password: configModule.projectConfig.database_password,
+    }
+  }
 
   const featureFlagRouter = featureFlagLoader(configModule)
 
@@ -38,8 +53,7 @@ const t = async function ({ directory, migrate, seedFile }) {
     const migrationDirs = await getMigrations(directory, featureFlagRouter)
     const connection = await createConnection({
       type: configModule.projectConfig.database_type,
-      database: configModule.projectConfig.database_database,
-      url: configModule.projectConfig.database_url,
+      ...hostConfig,
       extra: configModule.projectConfig.database_extra || {},
       migrations: migrationDirs,
       logging: true,

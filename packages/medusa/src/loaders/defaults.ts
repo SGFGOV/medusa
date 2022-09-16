@@ -15,8 +15,7 @@ import {
   PaymentProviderService,
   SalesChannelService,
   ShippingProfileService,
-  StoreService,
-  TaxProviderService,
+  StoreService, TaxProviderService,
 } from "../services"
 import { CurrencyRepository } from "../repositories/currency"
 import { FlagRouter } from "../utils/flag-router";
@@ -118,6 +117,7 @@ export default async ({
 
   await entityManager.transaction(async (manager: EntityManager) => {
     await storeService.withTransaction(manager).create()
+
 
     const payProviders =
       silentResolution<(typeof BasePaymentService | AbstractPaymentService<never>)[]>(

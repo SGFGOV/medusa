@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "target": "es2017",
+  //  "allowJs": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "lib": [
+      "es2015.proxy",
+      "es2017"
+    ],
+    "outDir": "dist",
+    "paths": {
+      "@modules/*": [
+        "modules/*"
+      ]
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types"
+    ],
+  },
+  "exclude": [
+    "**/node_modules",
+    "./dist/**/*"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts" 
+  ]
+}
