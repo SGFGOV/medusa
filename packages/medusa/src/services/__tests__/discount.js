@@ -1,5 +1,8 @@
 import { IdMap, MockManager, MockRepository } from "medusa-test-utils"
 import DiscountService from "../discount"
+import { FlagRouter } from "../../utils/flag-router"
+
+const featureFlagRouter = new FlagRouter({})
 
 describe("DiscountService", () => {
   describe("create", () => {
@@ -13,7 +16,7 @@ describe("DiscountService", () => {
           id: IdMap.getId("france"),
         }
       },
-      withTransaction: function() {
+      withTransaction: function () {
         return this
       },
     }
@@ -23,6 +26,7 @@ describe("DiscountService", () => {
       discountRepository,
       discountRuleRepository,
       regionService,
+      featureFlagRouter,
     })
 
     beforeEach(() => {
@@ -160,6 +164,7 @@ describe("DiscountService", () => {
     const discountService = new DiscountService({
       manager: MockManager,
       discountRepository,
+      featureFlagRouter,
     })
 
     beforeEach(() => {
@@ -203,6 +208,7 @@ describe("DiscountService", () => {
     const discountService = new DiscountService({
       manager: MockManager,
       discountRepository,
+      featureFlagRouter,
     })
 
     beforeEach(() => {
@@ -217,7 +223,6 @@ describe("DiscountService", () => {
           code: "10%OFF",
           is_dynamic: false,
         },
-        relations: [],
       })
     })
   })
@@ -232,7 +237,9 @@ describe("DiscountService", () => {
         }),
     })
 
-    const discountRuleRepository = MockRepository({})
+    const discountRuleRepository = MockRepository({
+      create: (values) => values,
+    })
 
     const regionService = {
       retrieve: () => {
@@ -247,6 +254,7 @@ describe("DiscountService", () => {
       discountRepository,
       discountRuleRepository,
       regionService,
+      featureFlagRouter,
     })
 
     beforeEach(() => {
@@ -344,6 +352,7 @@ describe("DiscountService", () => {
       discountRepository,
       discountRuleRepository,
       regionService,
+      featureFlagRouter,
     })
 
     beforeEach(() => {
@@ -417,6 +426,7 @@ describe("DiscountService", () => {
       discountRepository,
       discountRuleRepository,
       regionService,
+      featureFlagRouter,
     })
 
     beforeEach(() => {
@@ -465,6 +475,7 @@ describe("DiscountService", () => {
       discountRepository,
       discountRuleRepository,
       regionService,
+      featureFlagRouter,
     })
 
     beforeEach(() => {
@@ -508,6 +519,7 @@ describe("DiscountService", () => {
     const discountService = new DiscountService({
       manager: MockManager,
       discountRepository,
+      featureFlagRouter,
     })
 
     beforeEach(() => {
@@ -587,6 +599,7 @@ describe("DiscountService", () => {
       manager: MockManager,
       discountRepository,
       totalsService,
+      featureFlagRouter,
     })
 
     beforeEach(() => {
@@ -760,7 +773,10 @@ describe("DiscountService", () => {
     let discountService
 
     beforeEach(async () => {
-      discountService = new DiscountService({})
+      discountService = new DiscountService({
+        manager: MockManager,
+        featureFlagRouter,
+      })
       const hasReachedLimitMock = jest.fn().mockImplementation(() => false)
       const isDisabledMock = jest.fn().mockImplementation(() => false)
       const isValidForRegionMock = jest
@@ -889,7 +905,9 @@ describe("DiscountService", () => {
   })
 
   describe("hasReachedLimit", () => {
-    const discountService = new DiscountService({})
+    const discountService = new DiscountService({
+      featureFlagRouter,
+    })
 
     it("returns true if discount limit is reached", () => {
       const discount = {
@@ -933,7 +951,9 @@ describe("DiscountService", () => {
   })
 
   describe("isDisabled", () => {
-    const discountService = new DiscountService({})
+    const discountService = new DiscountService({
+      featureFlagRouter,
+    })
 
     it("returns false if discount not disabled", async () => {
       const discount = {
@@ -969,7 +989,9 @@ describe("DiscountService", () => {
   })
 
   describe("hasNotStarted", () => {
-    const discountService = new DiscountService({})
+    const discountService = new DiscountService({
+      featureFlagRouter,
+    })
 
     it("returns true if discount has a future starts_at date", async () => {
       const discount = {
@@ -1005,7 +1027,9 @@ describe("DiscountService", () => {
   })
 
   describe("hasExpired", () => {
-    const discountService = new DiscountService({})
+    const discountService = new DiscountService({
+      featureFlagRouter,
+    })
 
     it("returns false if discount has a future ends_at date", async () => {
       const discount = {
@@ -1063,7 +1087,10 @@ describe("DiscountService", () => {
       }
     })
 
-    const discountService = new DiscountService({})
+    const discountService = new DiscountService({
+      manager: MockManager,
+      featureFlagRouter,
+    })
     discountService.retrieve = retrieveMock
 
     beforeEach(() => {
@@ -1156,6 +1183,9 @@ describe("DiscountService", () => {
     }
 
     const customerService = {
+      withTransaction: function () {
+        return this
+      },
       retrieve: jest.fn().mockImplementation((id) => {
         if (id === "customer-no-groups") {
           return Promise.resolve({ id: "customer-no-groups" })
@@ -1173,6 +1203,7 @@ describe("DiscountService", () => {
       manager: MockManager,
       discountConditionRepository,
       customerService,
+      featureFlagRouter,
     })
 
     it("returns false on undefined customer id", async () => {

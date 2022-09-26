@@ -9,7 +9,7 @@ import {
   ValidateNested,
 } from "class-validator"
 import { PriceList } from "../models/price-list"
-import { DateComparisonOperator } from "./common"
+import { DateComparisonOperator, FindConfig } from "./common"
 import { XorConstraint } from "./validators/xor"
 
 export enum PriceListType {
@@ -38,6 +38,10 @@ export class FilterablePriceListProps {
   @IsString()
   @IsOptional()
   name?: string
+
+  @IsOptional()
+  @IsString({ each: true })
+  customer_groups?: string[]
 
   @IsString()
   @IsOptional()
@@ -120,12 +124,21 @@ export type CreatePriceListInput = {
   status?: PriceListStatus
   prices: AdminPriceListPricesCreateReq[]
   customer_groups?: { id: string }[]
+  starts_at?: Date
+  ends_at?: Date
+  includes_tax?: boolean
 }
 
 export type UpdatePriceListInput = Partial<
   Pick<
     PriceList,
-    "name" | "description" | "starts_at" | "ends_at" | "status" | "type"
+    | "name"
+    | "description"
+    | "starts_at"
+    | "ends_at"
+    | "status"
+    | "type"
+    | "includes_tax"
   >
 > & {
   prices?: AdminPriceListPricesUpdateReq[]
@@ -148,4 +161,12 @@ export type PriceListPriceCreateInput = {
   amount: number
   min_quantity?: number
   max_quantity?: number
+}
+
+export type PriceListLoadConfig = {
+  include_discount_prices?: boolean
+  customer_id?: string
+  cart_id?: string
+  region_id?: string
+  currency_code?: string
 }

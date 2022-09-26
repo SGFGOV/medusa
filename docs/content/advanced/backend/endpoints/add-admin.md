@@ -1,8 +1,4 @@
----
-title: Add Endpoint for Admin
----
-
-# Add Endpoint for Admin
+# Create Endpoint for Admin
 
 In this document, you’ll learn how to add a custom endpoint in the Backend that you can use from the Admin.
 
@@ -57,7 +53,7 @@ import cors from "cors"
 import { projectConfig } from "../../medusa-config"
 ```
 
-Then, create an object that will hold the CORS configurations:
+Then, create an object that will hold the Cross-Origin Resource Sharing (CORS) configurations:
 
 ```js
 const corsOptions = {
@@ -66,11 +62,11 @@ const corsOptions = {
 }
 ```
 
-Finally, for each route you add, create an `OPTIONS` request:
+Finally, for each route you add, create an `OPTIONS` request and add `cors` as a middleware for the route:
 
 ```js
 router.options("/admin/hello", cors(corsOptions))
-router.get("/admin/hello", (req, res) => {
+router.get("/admin/hello", cors(corsOptions), (req, res) => {
   //...
 })
 ```
@@ -208,7 +204,7 @@ const user = await userService.retrieve(id)
 
 ### Route Parameters
 
-The routes you create receive 2 parameters. The first one is the absolute path to the root directory that your server is running from. The second one is an object that has your plugin's options. If your API route is not implemented in a plugin, then it will be an empty object.
+The routes you create receive two parameters. The first one is the absolute path to the root directory that your server is running from. The second one is an object that has your plugin's options. If your API route is not implemented in a plugin, then it will be an empty object.
 
 ```js
 export default (rootDirectory, pluginOptions) => {

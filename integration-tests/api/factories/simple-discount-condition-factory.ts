@@ -12,7 +12,8 @@ import { DiscountConditionJoinTableForeignKey } from "@medusajs/medusa/dist/repo
 import faker from "faker"
 import { Connection } from "typeorm"
 
-export type DiscuntConditionFactoryData = {
+export type DiscountConditionFactoryData = {
+  id?: string
   rule_id: string
   type: DiscountConditionType
   operator: DiscountConditionOperator
@@ -66,7 +67,7 @@ const getJoinTableResourceIdentifiers = (type: string) => {
 
 export const simpleDiscountConditionFactory = async (
   connection: Connection,
-  data: DiscuntConditionFactoryData,
+  data: DiscountConditionFactoryData,
   seed?: number
 ): Promise<void> => {
   if (typeof seed !== "undefined") {
@@ -93,11 +94,17 @@ export const simpleDiscountConditionFactory = async (
     resources = data.customer_groups
   }
 
-  const condToSave = manager.create(DiscountCondition, {
+  const toCreate = {
     type: data.type,
     operator: data.operator,
     discount_rule_id: data.rule_id,
-  })
+  }
+
+  if (data.id) {
+    toCreate["id"] = data.id
+  }
+
+  const condToSave = manager.create(DiscountCondition, toCreate)
 
   const { conditionTable, resourceKey } = getJoinTableResourceIdentifiers(
     data.type

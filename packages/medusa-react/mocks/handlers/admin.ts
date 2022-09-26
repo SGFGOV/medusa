@@ -1,7 +1,56 @@
-import { fixtures } from "../data"
 import { rest } from "msw"
+import { fixtures } from "../data"
 
 export const adminHandlers = [
+  rest.post("/admin/batch-jobs/", (req, res, ctx) => {
+    const body = req.body as Record<string, any>
+    return res(
+      ctx.status(200),
+      ctx.json({
+        batch_job: {
+          ...fixtures.get("batch_job"),
+          ...body,
+        },
+      })
+    )
+  }),
+
+  rest.get("/admin/batch-jobs/", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        batch_jobs: fixtures.list("batch_job"),
+      })
+    )
+  }),
+
+  rest.get("/admin/batch-jobs/:id", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        batch_job: fixtures.get("batch_job"),
+      })
+    )
+  }),
+
+  rest.post("/admin/batch-jobs/:id/confirm", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        batch_job: fixtures.get("batch_job"),
+      })
+    )
+  }),
+
+  rest.post("/admin/batch-jobs/:id/cancel", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        batch_job: fixtures.get("batch_job"),
+      })
+    )
+  }),
+
   rest.post("/admin/collections/", (req, res, ctx) => {
     const body = req.body as Record<string, any>
     return res(
@@ -54,6 +103,29 @@ export const adminHandlers = [
         id: req.params.id,
         object: "collection",
         deleted: true,
+      })
+    )
+  }),
+
+  rest.post("/admin/collections/:id/products/batch", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        collection: {
+          ...fixtures.get("product_collection"),
+          products: [fixtures.get("product")],
+        },
+      })
+    )
+  }),
+
+  rest.delete("/admin/collections/:id/products/batch", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        id: req.params.id,
+        object: "product-collection",
+        removed_products: [fixtures.get("product").id],
       })
     )
   }),
@@ -252,6 +324,34 @@ export const adminHandlers = [
       })
     )
   }),
+
+  rest.delete(
+    "/admin/price-lists/:id/products/:product_id/prices",
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          ids: [],
+          object: "money-amount",
+          deleted: true,
+        })
+      )
+    }
+  ),
+
+  rest.delete(
+    "/admin/price-lists/:id/variants/:variant_id/prices",
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          ids: [],
+          object: "money-amount",
+          deleted: true,
+        })
+      )
+    }
+  ),
 
   rest.post("/admin/return-reasons/", (req, res, ctx) => {
     const body = req.body as Record<string, any>
@@ -761,6 +861,56 @@ export const adminHandlers = [
       })
     )
   }),
+
+  rest.post("/admin/discounts/:id/conditions", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        discount: {
+          ...fixtures.get("discount"),
+        },
+      })
+    )
+  }),
+
+  rest.post("/admin/discounts/:id/conditions/:conditionId", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        discount: {
+          ...fixtures.get("discount"),
+        },
+      })
+    )
+  }),
+
+  rest.get("/admin/discounts/:id/conditions/:conditionId", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        discount_condition: {
+          ...fixtures
+            .get("discount")
+            .rule.conditions.find((c) => c.id === req.params.conditionId),
+        },
+      })
+    )
+  }),
+
+  rest.delete(
+    "/admin/discounts/:id/conditions/:conditionId",
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          id: req.params.conditionId,
+          object: "discount-condition",
+          deleted: true,
+          discount: fixtures.get("discount"),
+        })
+      )
+    }
+  ),
 
   rest.get("/admin/draft-orders/", (req, res, ctx) => {
     return res(
@@ -1503,6 +1653,28 @@ export const adminHandlers = [
     )
   }),
 
+  rest.get("/admin/order-edits/:id", (req, res, ctx) => {
+    const { id } = req.params
+    return res(
+      ctx.status(200),
+      ctx.json({
+        order_edit: fixtures.get("order_edit"),
+        id,
+      })
+    )
+  }),
+
+  rest.get("/store/order-edits/:id", (req, res, ctx) => {
+    const { id } = req.params
+    return res(
+      ctx.status(200),
+      ctx.json({
+        order_edit: fixtures.get("store_order_edit"),
+        id,
+      })
+    )
+  }),
+
   rest.get("/admin/auth", (req, res, ctx) => {
     return res(
       ctx.status(200),
@@ -1523,5 +1695,118 @@ export const adminHandlers = [
 
   rest.delete("/admin/auth", (req, res, ctx) => {
     return res(ctx.status(200))
+  }),
+
+  rest.delete("/admin/uploads", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        id: (req.body as any).file_key,
+        object: "file",
+        deleted: true,
+      })
+    )
+  }),
+
+  rest.post("/admin/uploads/download-url", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        download_url: fixtures.get("upload").url,
+      })
+    )
+  }),
+
+  rest.get("/admin/sales-channels/:id", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        sales_channel: fixtures.get("sales_channel"),
+      })
+    )
+  }),
+
+  rest.get("/admin/sales-channels", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        count: 1,
+        limit: 20,
+        offset: 20,
+        sales_channels: fixtures.get("sales_channels"),
+      })
+    )
+  }),
+
+  rest.post("/admin/sales-channels/:id", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        sales_channel: {
+          ...fixtures.get("sales_channel"),
+          ...(req.body as any),
+        },
+      })
+    )
+  }),
+
+  rest.post("/admin/sales-channels", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        sales_channel: fixtures.get("sales_channel"),
+        ...(req.body as Record<string, unknown>),
+      })
+    )
+  }),
+
+  rest.delete("/admin/sales-channels/:id", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        id: req.params.id,
+        object: "sales-channel",
+        deleted: true,
+      })
+    )
+  }),
+
+  rest.delete("/admin/sales-channels/:id/products/batch", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        sales_channel: fixtures.get("sales_channel"),
+      })
+    )
+  }),
+
+  rest.post("/admin/sales-channels/:id/products/batch", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        sales_channel: fixtures.get("sales_channel"),
+      })
+    )
+  }),
+
+  rest.get("/admin/currencies", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        count: 1,
+        limit: 20,
+        offset: 20,
+        currencies: fixtures.list("currency", 1),
+      })
+    )
+  }),
+
+  rest.post("/admin/currencies/:code", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        currency: { ...fixtures.get("currency"), ...(req.body as any) },
+      })
+    )
   }),
 ]

@@ -1,0 +1,738 @@
+# Class: RegionService
+
+Provides layer to manipulate regions.
+
+## Hierarchy
+
+- `TransactionBaseService`
+
+  ↳ **`RegionService`**
+
+## Constructors
+
+### constructor
+
+• **new RegionService**(`__namedParameters`)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | `InjectedDependencies` |
+
+#### Overrides
+
+TransactionBaseService.constructor
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:66](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L66)
+
+## Properties
+
+### \_\_configModule\_\_
+
+• `Protected` `Optional` `Readonly` **\_\_configModule\_\_**: `Record`<`string`, `unknown`\>
+
+#### Inherited from
+
+TransactionBaseService.\_\_configModule\_\_
+
+#### Defined in
+
+[packages/medusa/src/interfaces/transaction-base-service.ts:10](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/interfaces/transaction-base-service.ts#L10)
+
+___
+
+### \_\_container\_\_
+
+• `Protected` `Readonly` **\_\_container\_\_**: `any`
+
+#### Inherited from
+
+TransactionBaseService.\_\_container\_\_
+
+#### Defined in
+
+[packages/medusa/src/interfaces/transaction-base-service.ts:9](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/interfaces/transaction-base-service.ts#L9)
+
+___
+
+### countryRepository\_
+
+• `Protected` `Readonly` **countryRepository\_**: typeof `CountryRepository`
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:60](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L60)
+
+___
+
+### currencyRepository\_
+
+• `Protected` `Readonly` **currencyRepository\_**: typeof `CurrencyRepository`
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:61](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L61)
+
+___
+
+### eventBus\_
+
+• `Protected` `Readonly` **eventBus\_**: [`EventBusService`](EventBusService.md)
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:55](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L55)
+
+___
+
+### featureFlagRouter\_
+
+• `Protected` **featureFlagRouter\_**: `FlagRouter`
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:53](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L53)
+
+___
+
+### fulfillmentProviderRepository\_
+
+• `Protected` `Readonly` **fulfillmentProviderRepository\_**: typeof `FulfillmentProviderRepository`
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:63](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L63)
+
+___
+
+### fulfillmentProviderService\_
+
+• `Protected` `Readonly` **fulfillmentProviderService\_**: [`FulfillmentProviderService`](FulfillmentProviderService.md)
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:58](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L58)
+
+___
+
+### manager\_
+
+• `Protected` **manager\_**: `EntityManager`
+
+#### Overrides
+
+TransactionBaseService.manager\_
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:51](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L51)
+
+___
+
+### paymentProviderRepository\_
+
+• `Protected` `Readonly` **paymentProviderRepository\_**: typeof `PaymentProviderRepository`
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:62](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L62)
+
+___
+
+### paymentProviderService\_
+
+• `Protected` `Readonly` **paymentProviderService\_**: [`PaymentProviderService`](PaymentProviderService.md)
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:57](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L57)
+
+___
+
+### regionRepository\_
+
+• `Protected` `Readonly` **regionRepository\_**: typeof `RegionRepository`
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:59](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L59)
+
+___
+
+### storeService\_
+
+• `Protected` `Readonly` **storeService\_**: [`StoreService`](StoreService.md)
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:56](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L56)
+
+___
+
+### taxProviderRepository\_
+
+• `Protected` `Readonly` **taxProviderRepository\_**: typeof `TaxProviderRepository`
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:64](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L64)
+
+___
+
+### transactionManager\_
+
+• `Protected` **transactionManager\_**: `undefined` \| `EntityManager`
+
+#### Overrides
+
+TransactionBaseService.transactionManager\_
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:52](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L52)
+
+___
+
+### Events
+
+▪ `Static` **Events**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `CREATED` | `string` |
+| `DELETED` | `string` |
+| `UPDATED` | `string` |
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:45](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L45)
+
+## Methods
+
+### addCountry
+
+▸ **addCountry**(`regionId`, `code`): `Promise`<`Region`\>
+
+Adds a country to the region.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionId` | `string` | the region to add a country to |
+| `code` | `string` | a 2 digit alphanumeric ISO country code. |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+the updated Region
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:572](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L572)
+
+___
+
+### addFulfillmentProvider
+
+▸ **addFulfillmentProvider**(`regionId`, `providerId`): `Promise`<`Region`\>
+
+Adds a fulfillment provider that is available in the region. Fails if the
+provider doesn't exist.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionId` | `string` | the region to add the provider to |
+| `providerId` | `string` | the provider to add to the region |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+the updated Region
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:702](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L702)
+
+___
+
+### addPaymentProvider
+
+▸ **addPaymentProvider**(`regionId`, `providerId`): `Promise`<`Region`\>
+
+Adds a payment provider that is available in the region. Fails if the
+provider doesn't exist.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionId` | `string` | the region to add the provider to |
+| `providerId` | `string` | the provider to add to the region |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+the updated Region
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:651](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L651)
+
+___
+
+### atomicPhase\_
+
+▸ `Protected` **atomicPhase_**<`TResult`, `TError`\>(`work`, `isolationOrErrorHandler?`, `maybeErrorHandlerOrDontFail?`): `Promise`<`TResult`\>
+
+Wraps some work within a transactional block. If the service already has
+a transaction manager attached this will be reused, otherwise a new
+transaction manager is created.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TResult` |
+| `TError` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `work` | (`transactionManager`: `EntityManager`) => `Promise`<`TResult`\> | the transactional work to be done |
+| `isolationOrErrorHandler?` | `IsolationLevel` \| (`error`: `TError`) => `Promise`<`void` \| `TResult`\> | the isolation level to be used for the work. |
+| `maybeErrorHandlerOrDontFail?` | (`error`: `TError`) => `Promise`<`void` \| `TResult`\> | Potential error handler |
+
+#### Returns
+
+`Promise`<`TResult`\>
+
+the result of the transactional work
+
+#### Inherited from
+
+TransactionBaseService.atomicPhase\_
+
+#### Defined in
+
+[packages/medusa/src/interfaces/transaction-base-service.ts:50](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/interfaces/transaction-base-service.ts#L50)
+
+___
+
+### create
+
+▸ **create**(`data`): `Promise`<`Region`\>
+
+Creates a region.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `CreateRegionInput` | the unvalidated region |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+the newly created region
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:116](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L116)
+
+___
+
+### delete
+
+▸ **delete**(`regionId`): `Promise`<`void`\>
+
+Deletes a region.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionId` | `string` | the region to delete |
+
+#### Returns
+
+`Promise`<`void`\>
+
+the result of the delete operation
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:541](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L541)
+
+___
+
+### list
+
+▸ **list**(`selector?`, `config?`): `Promise`<`Region`[]\>
+
+Lists all regions based on a query
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | `Selector`<`Region`\> | query object for find |
+| `config` | `FindConfig`<`Region`\> | configuration settings |
+
+#### Returns
+
+`Promise`<`Region`[]\>
+
+result of the find operation
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:521](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L521)
+
+___
+
+### removeCountry
+
+▸ **removeCountry**(`regionId`, `code`): `Promise`<`Region`\>
+
+Removes a country from a Region.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionId` | `string` | the region to remove from |
+| `code` | `string` | a 2 digit alphanumeric ISO country code to remove |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+the updated Region
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:610](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L610)
+
+___
+
+### removeFulfillmentProvider
+
+▸ **removeFulfillmentProvider**(`regionId`, `providerId`): `Promise`<`Region`\>
+
+Removes a fulfillment provider from a region. Is idempotent.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionId` | `string` | the region to remove the provider from |
+| `providerId` | `string` | the provider to remove from the region |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+the updated Region
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:790](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L790)
+
+___
+
+### removePaymentProvider
+
+▸ **removePaymentProvider**(`regionId`, `providerId`): `Promise`<`Region`\>
+
+Removes a payment provider from a region. Is idempotent.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionId` | `string` | the region to remove the provider from |
+| `providerId` | `string` | the provider to remove from the region |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+the updated Region
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:751](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L751)
+
+___
+
+### retrieve
+
+▸ **retrieve**(`regionId`, `config?`): `Promise`<`Region`\>
+
+Retrieves a region by its id.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionId` | `string` | the id of the region to retrieve |
+| `config` | `FindConfig`<`Region`\> | configuration settings |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+the region
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:493](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L493)
+
+___
+
+### retrieveByCountryCode
+
+▸ **retrieveByCountryCode**(`code`, `config?`): `Promise`<`Region`\>
+
+Retrieve a region by country code.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | a 2 digit alphanumeric ISO country code |
+| `config` | `FindConfig`<`Region`\> | region find config |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+a Region with country code
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:436](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L436)
+
+___
+
+### retrieveByName
+
+▸ **retrieveByName**(`name`): `Promise`<`Region`\>
+
+Retrieves a region by name.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | the name of the region to retrieve |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+region with the matching name
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:473](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L473)
+
+___
+
+### shouldRetryTransaction\_
+
+▸ `Protected` **shouldRetryTransaction_**(`err`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `err` | `Record`<`string`, `unknown`\> \| { `code`: `string`  } |
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+TransactionBaseService.shouldRetryTransaction\_
+
+#### Defined in
+
+[packages/medusa/src/interfaces/transaction-base-service.ts:31](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/interfaces/transaction-base-service.ts#L31)
+
+___
+
+### update
+
+▸ **update**(`regionId`, `update`): `Promise`<`Region`\>
+
+Updates a region
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionId` | `string` | the region to update |
+| `update` | `UpdateRegionInput` | the data to update the region with |
+
+#### Returns
+
+`Promise`<`Region`\>
+
+the result of the update operation
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:189](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L189)
+
+___
+
+### validateCountry
+
+▸ `Protected` **validateCountry**(`code`, `regionId`): `Promise`<`Country`\>
+
+Validates a country code. Will normalize the code before checking for
+existence.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | a 2 digit alphanumeric ISO country code |
+| `regionId` | `string` | the id of the current region to check against |
+
+#### Returns
+
+`Promise`<`Country`\>
+
+the validated Country
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:387](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L387)
+
+___
+
+### validateCurrency
+
+▸ `Protected` **validateCurrency**(`currencyCode`): `Promise`<`void`\>
+
+Validates a currency code. Will throw if the currency code doesn't exist.
+
+**`Throws`**
+
+if the provided currency code is invalid
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `currencyCode` | `string` | an ISO currency code |
+
+#### Returns
+
+`Promise`<`void`\>
+
+void
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:362](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L362)
+
+___
+
+### validateFields
+
+▸ `Protected` **validateFields**<`T`\>(`regionData`, `id?`): `Promise`<{ `automatic_taxes?`: `boolean` ; `countries?`: (`undefined` \| { id?: number \| undefined; iso\_2?: string \| undefined; iso\_3?: string \| undefined; num\_code?: number \| undefined; name?: string \| undefined; display\_name?: string \| undefined; region\_id?: string \| ... 1 more ... \| undefined; region?: { ...; } \| undefined; })[] ; `created_at?`: { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } ; `currency?`: { code?: string \| undefined; symbol?: string \| undefined; symbol\_native?: string \| undefined; name?: string \| undefined; includes\_tax?: boolean \| undefined; } ; `currency_code?`: `string` ; `deleted_at?`: ``null`` \| { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } ; `fulfillment_providers?`: (`undefined` \| { id?: string \| undefined; is\_installed?: boolean \| undefined; })[] ; `gift_cards_taxable?`: `boolean` ; `id?`: `string` ; `includes_tax?`: `boolean` ; `metadata?`: { [x: string]: unknown; } ; `name?`: `string` ; `payment_providers?`: (`undefined` \| { id?: string \| undefined; is\_installed?: boolean \| undefined; })[] ; `tax_code?`: `string` ; `tax_provider?`: { id?: string \| undefined; is\_installed?: boolean \| undefined; } ; `tax_provider_id?`: ``null`` \| `string` ; `tax_rate?`: `number` ; `tax_rates?`: ``null`` \| (`undefined` \| { rate?: number \| null \| undefined; code?: string \| null \| undefined; name?: string \| undefined; region\_id?: string \| undefined; region?: { name?: string \| undefined; currency\_code?: string \| undefined; ... 16 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 9 more ...; updated\_at?: { ...; } \| undefin...)[] ; `updated_at?`: { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; }  }\>
+
+Validates fields for creation and updates. If the region already exists
+the id can be passed to check that country updates are allowed.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `UpdateRegionInput` \| `CreateRegionInput` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regionData` | `Omit`<`T`, ``"currency_code"`` \| ``"metadata"``\> | the region data to validate |
+| `id?` | `T` extends `UpdateRegionInput` ? `string` : `undefined` | optional id of the region to check against |
+
+#### Returns
+
+`Promise`<{ `automatic_taxes?`: `boolean` ; `countries?`: (`undefined` \| { id?: number \| undefined; iso\_2?: string \| undefined; iso\_3?: string \| undefined; num\_code?: number \| undefined; name?: string \| undefined; display\_name?: string \| undefined; region\_id?: string \| ... 1 more ... \| undefined; region?: { ...; } \| undefined; })[] ; `created_at?`: { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } ; `currency?`: { code?: string \| undefined; symbol?: string \| undefined; symbol\_native?: string \| undefined; name?: string \| undefined; includes\_tax?: boolean \| undefined; } ; `currency_code?`: `string` ; `deleted_at?`: ``null`` \| { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } ; `fulfillment_providers?`: (`undefined` \| { id?: string \| undefined; is\_installed?: boolean \| undefined; })[] ; `gift_cards_taxable?`: `boolean` ; `id?`: `string` ; `includes_tax?`: `boolean` ; `metadata?`: { [x: string]: unknown; } ; `name?`: `string` ; `payment_providers?`: (`undefined` \| { id?: string \| undefined; is\_installed?: boolean \| undefined; })[] ; `tax_code?`: `string` ; `tax_provider?`: { id?: string \| undefined; is\_installed?: boolean \| undefined; } ; `tax_provider_id?`: ``null`` \| `string` ; `tax_rate?`: `number` ; `tax_rates?`: ``null`` \| (`undefined` \| { rate?: number \| null \| undefined; code?: string \| null \| undefined; name?: string \| undefined; region\_id?: string \| undefined; region?: { name?: string \| undefined; currency\_code?: string \| undefined; ... 16 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 9 more ...; updated\_at?: { ...; } \| undefin...)[] ; `updated_at?`: { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; }  }\>
+
+the validated region data
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:260](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L260)
+
+___
+
+### validateTaxRate
+
+▸ `Protected` **validateTaxRate**(`taxRate`): `void`
+
+Validates a tax rate. Will throw if the tax rate is not between 0 and 1.
+
+**`Throws`**
+
+if the tax rate isn't number between 0-100
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `taxRate` | `number` | a number representing the tax rate of the region |
+
+#### Returns
+
+`void`
+
+void
+
+#### Defined in
+
+[packages/medusa/src/services/region.ts:346](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/services/region.ts#L346)
+
+___
+
+### withTransaction
+
+▸ **withTransaction**(`transactionManager?`): [`RegionService`](RegionService.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `transactionManager?` | `EntityManager` |
+
+#### Returns
+
+[`RegionService`](RegionService.md)
+
+#### Inherited from
+
+TransactionBaseService.withTransaction
+
+#### Defined in
+
+[packages/medusa/src/interfaces/transaction-base-service.ts:13](https://github.com/medusajs/medusa/blob/6225aa57b/packages/medusa/src/interfaces/transaction-base-service.ts#L13)

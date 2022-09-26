@@ -1,10 +1,10 @@
-import { PaymentService } from "medusa-interfaces"
+import { AbstractPaymentService } from "@medusajs/medusa"
 
-class TestPayService extends PaymentService {
+class TestPayService extends AbstractPaymentService {
   static identifier = "test-pay"
 
-  constructor() {
-    super()
+  constructor(_) {
+    super(_)
   }
 
   async getStatus(paymentData) {
@@ -42,6 +42,12 @@ class TestPayService extends PaymentService {
   }
 
   async authorizePayment(sessionData, context = {}) {
+    if (
+      sessionData.cart_id === "cart-id-tax-line-testing-for-pending-payment"
+    ) {
+      return { data: {}, status: "pending" }
+    }
+
     return { data: {}, status: "authorized" }
   }
 

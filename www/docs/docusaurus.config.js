@@ -1,11 +1,15 @@
 const path = require("path")
+const fs = require("fs")
 const docsPath = path.join(__dirname, "../../docs/content")
+const apisPath = path.join(__dirname, "../../docs/api")
 
 const algoliaAppId = process.env.ALGOLIA_APP_ID || "temp"
 const algoliaApiKey = process.env.ALGOLIA_API_KEY || "temp"
 
+const announcementBar = JSON.parse(fs.readFileSync('./announcement.json'))
+
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
-module.exports = {
+const config = {
   title: "Medusa",
   tagline: "Explore and learn how to use Medusa",
   url: "https://docs.medusajs.com",
@@ -23,6 +27,12 @@ module.exports = {
         systemvars: true, // Set to true if you would rather load all system variables as well (useful for CI purposes)
       },
     ],
+    [
+      "docusaurus-plugin-segment",
+      {
+        apiKey: process.env.SEGMENT_API_KEY || "temp"
+      }
+    ]
   ],
   themeConfig: {
     colorMode: {
@@ -53,13 +63,38 @@ module.exports = {
       },
       items: [
         {
-          href: "https://docs.medusajs.com",
-          label: "Introduction",
+          type: "docSidebar",
+          sidebarId: "docsSidebar",
+          label: "Docs"
         },
         {
-          href: `https://docs.medusajs.com/api/store`,
-          target: "_self",
-          label: "API Reference",
+          type: "docSidebar",
+          sidebarId: "userGuideSidebar",
+          label: "User Guide"
+        },
+        {
+          type: 'dropdown',
+          label: 'REST API Reference',
+          items: [
+            {
+              type: 'html',
+              value: `
+              <a href="/api/store" target="_blank" rel="noopener noreferrer" class="dropdown__link">Store
+                <svg width="12" height="12" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_node_modules-@docusaurus-theme-classic-lib-theme-Icon-ExternalLink-styles-module">
+                  <path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path>
+                </svg>
+              </a>`
+            },
+            {
+              type: 'html',
+              value: `
+              <a href="/api/admin" target="_blank" rel="noopener noreferrer" class="dropdown__link">Admin
+                <svg width="12" height="12" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_node_modules-@docusaurus-theme-classic-lib-theme-Icon-ExternalLink-styles-module">
+                  <path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path>
+                </svg>
+              </a>`
+            },
+          ],
         },
         {
           href: "https://github.com/medusajs/medusa",
@@ -74,15 +109,6 @@ module.exports = {
     },
     footer: {
       links: [
-        {
-          title: "Docs",
-          items: [
-            {
-              label: "Tutorial",
-              to: "/tutorial/set-up-your-development-environment",
-            },
-          ],
-        },
         {
           title: "Community",
           items: [
@@ -120,6 +146,18 @@ module.exports = {
       ],
       copyright: `© ${new Date().getFullYear()} Medusa`,
     },
+    sidebarFooter: [
+      {
+        href: "https://github.com/medusajs/medusa/issues/new?assignees=&labels=type%3A+docs&template=docs.yml",
+        label: 'Report an Issue',
+        className: 'alert-icon',
+      },
+      {
+        href: "https://medusajs.com/",
+        label: 'Go to medusajs.com',
+        className: 'topright-icon',
+      },
+    ],
   },
   presets: [
     [
@@ -127,17 +165,66 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/medusajs/medusa/edit/master/www/",
+          editUrl: "https://github.com/medusajs/medusa/edit/master/docs/content",
           path: docsPath,
           routeBasePath: "/",
           remarkPlugins: [
             [require('@docusaurus/remark-plugin-npm2yarn'), {sync: true}],
           ],
+          showLastUpdateTime: true
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
+          customCss: require.resolve("./src/css/custom.css")
         },
+      },
+    ],
+    [
+      'redocusaurus',
+      {
+        // Plugin Options for loading OpenAPI files
+        specs: [
+          {
+            spec: path.join(apisPath, 'store/openapi.yaml'),
+            route: '/api/store',
+            layout: {
+              noFooter: true
+            }
+          },
+          {
+            spec: path.join(apisPath, 'admin/openapi.yaml'),
+            route: '/api/admin',
+            layout: {
+              noFooter: true
+            }
+          }
+        ],
+        // Theme Options for modifying how redoc renders them
+        theme: {
+          primaryColorDark: '#242526',
+          options: {
+            disableSearch: true,
+            nativeScrollbars: true,
+            sortTagsAlphabetically: true,
+            hideDownloadButton: true,
+            expandResponses: "200,204",
+            generatedPayloadSamplesMaxDepth: 4,
+            showObjectSchemaExamples: true,
+            requiredPropsFirst: true,
+            hideRequestPayloadSample: true
+          },
+          theme: {
+            sidebar: {
+              width: '250px'
+            }
+          }
+        }
       },
     ],
   ],
 }
+
+if (Object.keys(announcementBar).length) {
+  config.themeConfig.announcementBar = announcementBar
+}
+
+module.exports = config

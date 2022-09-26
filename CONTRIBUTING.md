@@ -2,6 +2,8 @@
 
 Thank you for considering contributing to Medusa! This document will outline how to submit changes to this repository and which conventions to follow. If you are ever in doubt about anything we encourage you to reach out either by submitting an issue here or reaching out [via Discord](https://discord.gg/xpCwq3Kfn8).
 
+If you're contributing to our documentation, make sure to also check out the [contribution guidelines on our documentation website](https://docs.medusajs.com/contribution-guidelines).
+
 ## Prerequisites
 
 - **You're familiar with GitHub Issues and Pull Requests**
@@ -53,6 +55,8 @@ All PRs should include tests for the changes that are included. We have two type
 
 - **Unit tests** found under `packages/*/src/services/__tests__` and `packages/*/src/api/routes/*/__tests__`
 - **Integration tests** found in `integration-tests/*/__tests__`
+
+Check out our [local development documentation](https://docs.medusajs.com/usage/local-development) to learn how to test your changes both in the Medusa repository and in a local server.
 
 ### Documentation
 

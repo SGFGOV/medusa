@@ -4,10 +4,13 @@ import jwt from "jsonwebtoken"
 import { MockManager } from "medusa-test-utils"
 import "reflect-metadata"
 import supertest from "supertest"
+import querystring from "querystring"
 import apiLoader from "../loaders/api"
 import passportLoader from "../loaders/passport"
+import featureFlagLoader, { featureFlagRouter } from "../loaders/feature-flags"
 import servicesLoader from "../loaders/services"
 import strategiesLoader from "../loaders/strategies"
+import logger from "../loaders/logger";
 
 const adminSessionOpts = {
   cookieName: "session",
@@ -23,17 +26,19 @@ const clientSessionOpts = {
 
 const config = {
   projectConfig: {
-    jwt_secret: 'supersecret',
-    cookie_secret: 'superSecret',
-    admin_cors: '',
-    store_cors: ''
-  }
+    jwt_secret: "supersecret",
+    cookie_secret: "superSecret",
+    admin_cors: "",
+    store_cors: "",
+  },
 }
 
 const testApp = express()
 
 const container = createContainer()
-container.register('configModule', asValue(config))
+
+container.register("featureFlagRouter", asValue(featureFlagRouter))
+container.register("configModule", asValue(config))
 container.register({
   logger: asValue({
     error: () => {},
@@ -54,6 +59,7 @@ testApp.use((req, res, next) => {
   next()
 })
 
+featureFlagLoader(config)
 servicesLoader({ container, configModule: config })
 strategiesLoader({ container, configModule: config })
 passportLoader({ app: testApp, container, configModule: config })
@@ -68,10 +74,16 @@ apiLoader({ container, app: testApp, configModule: config })
 const supertestRequest = supertest(testApp)
 
 export async function request(method, url, opts = {}) {
-  let { payload, headers } = opts
+  const { payload, query, headers = {}, flags = [] } = opts
 
-  const req = supertestRequest[method.toLowerCase()](url)
-  headers = headers || {}
+  flags.forEach((flag) => {
+    featureFlagRouter.setFlag(flag.key, true)
+  })
+
+  const queryParams = query && querystring.stringify(query)
+  const req = supertestRequest[method.toLowerCase()](
+    `${url}${queryParams ? "?" + queryParams : ""}`
+  )
   headers.Cookie = headers.Cookie || ""
   if (opts.adminSession) {
     if (opts.adminSession.jwt) {
@@ -136,6 +148,5 @@ export async function request(method, url, opts = {}) {
   //  c[clientSessionOpts.cookieName] &&
   //  sessions.util.decode(clientSessionOpts, c[clientSessionOpts.cookieName])
   //    .content
-
   return res
 }

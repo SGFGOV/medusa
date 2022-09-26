@@ -1,14 +1,24 @@
 import { MedusaError } from "medusa-core-utils"
 import { BaseService } from "medusa-interfaces"
 import { EntityManager } from "typeorm"
+import { DeepPartial } from "typeorm/common/DeepPartial"
+import TaxInclusivePricingFeatureFlag from "../loaders/feature-flags/tax-inclusive-pricing"
+import { LineItemTaxLine } from "../models"
+import { Cart } from "../models/cart"
+import { LineItem } from "../models/line-item"
+import { LineItemAdjustment } from "../models/line-item-adjustment"
+import { CartRepository } from "../repositories/cart"
 import { LineItemRepository } from "../repositories/line-item"
 import { LineItemTaxLineRepository } from "../repositories/line-item-tax-line"
-import { ProductService, RegionService, ProductVariantService } from "./index"
-import { CartRepository } from "../repositories/cart"
-import { LineItem } from "../models/line-item"
+import { FindConfig } from "../types/common"
+import { FlagRouter } from "../utils/flag-router"
+import {
+  PricingService,
+  ProductService,
+  ProductVariantService,
+  RegionService,
+} from "./index"
 import LineItemAdjustmentService from "./line-item-adjustment"
-import { Cart } from "../models/cart"
-import { LineItemAdjustment } from "../models/line-item-adjustment"
 
 type InjectedDependencies = {
   manager: EntityManager
@@ -17,8 +27,10 @@ type InjectedDependencies = {
   cartRepository: typeof CartRepository
   productVariantService: ProductVariantService
   productService: ProductService
+  pricingService: PricingService
   regionService: RegionService
   lineItemAdjustmentService: LineItemAdjustmentService
+  featureFlagRouter: FlagRouter
 }
 
 /**
@@ -32,7 +44,9 @@ class LineItemService extends BaseService {
   protected readonly cartRepository_: typeof CartRepository
   protected readonly productVariantService_: ProductVariantService
   protected readonly productService_: ProductService
+  protected readonly pricingService_: PricingService
   protected readonly regionService_: RegionService
+  protected readonly featureFlagRouter_: FlagRouter
   protected readonly lineItemAdjustmentService_: LineItemAdjustmentService
 
   constructor({
@@ -41,9 +55,11 @@ class LineItemService extends BaseService {
     lineItemTaxLineRepository,
     productVariantService,
     productService,
+    pricingService,
     regionService,
     cartRepository,
     lineItemAdjustmentService,
+    featureFlagRouter,
   }: InjectedDependencies) {
     super()
 
@@ -52,9 +68,11 @@ class LineItemService extends BaseService {
     this.itemTaxLineRepo_ = lineItemTaxLineRepository
     this.productVariantService_ = productVariantService
     this.productService_ = productService
+    this.pricingService_ = pricingService
     this.regionService_ = regionService
     this.cartRepository_ = cartRepository
     this.lineItemAdjustmentService_ = lineItemAdjustmentService
+    this.featureFlagRouter_ = featureFlagRouter
   }
 
   withTransaction(transactionManager: EntityManager): LineItemService {
@@ -68,9 +86,11 @@ class LineItemService extends BaseService {
       lineItemTaxLineRepository: this.itemTaxLineRepo_,
       productVariantService: this.productVariantService_,
       productService: this.productService_,
+      pricingService: this.pricingService_,
       regionService: this.regionService_,
       cartRepository: this.cartRepository_,
       lineItemAdjustmentService: this.lineItemAdjustmentService_,
+      featureFlagRouter: this.featureFlagRouter_,
     })
 
     cloned.transactionManager_ = transactionManager
@@ -80,17 +100,16 @@ class LineItemService extends BaseService {
 
   async list(
     selector,
-    config = { skip: 0, take: 50, order: { created_at: "DESC" } }
+    config: FindConfig<LineItem> = {
+      skip: 0,
+      take: 50,
+      order: { created_at: "DESC" },
+    }
   ): Promise<LineItem[]> {
-    return await this.atomicPhase_(
-      async (transactionManager: EntityManager) => {
-        const lineItemRepo = transactionManager.getCustomRepository(
-          this.lineItemRepository_
-        )
-        const query = this.buildQuery_(selector, config)
-        return await lineItemRepo.find(query)
-      }
-    )
+    const manager = this.manager_
+    const lineItemRepo = manager.getCustomRepository(this.lineItemRepository_)
+    const query = this.buildQuery_(selector, config)
+    return await lineItemRepo.find(query)
   }
 
   /**
@@ -100,27 +119,24 @@ class LineItemService extends BaseService {
    * @return {Promise<LineItem | never>} the line item
    */
   async retrieve(id: string, config = {}): Promise<LineItem | never> {
-    return await this.atomicPhase_(
-      async (transactionManager: EntityManager) => {
-        const lineItemRepository = transactionManager.getCustomRepository(
-          this.lineItemRepository_
-        )
-
-        const validatedId = this.validateId_(id)
-        const query = this.buildQuery_({ id: validatedId }, config)
-
-        const lineItem = await lineItemRepository.findOne(query)
-
-        if (!lineItem) {
-          throw new MedusaError(
-            MedusaError.Types.NOT_FOUND,
-            `Line item with ${id} was not found`
-          )
-        }
-
-        return lineItem
-      }
+    const manager = this.manager_
+    const lineItemRepository = manager.getCustomRepository(
+      this.lineItemRepository_
     )
+
+    const validatedId = this.validateId_(id)
+    const query = this.buildQuery_({ id: validatedId }, config)
+
+    const lineItem = await lineItemRepository.findOne(query)
+
+    if (!lineItem) {
+      throw new MedusaError(
+        MedusaError.Types.NOT_FOUND,
+        `Line item with ${id} was not found`
+      )
+    }
+
+    return lineItem
   }
 
   /**
@@ -189,6 +205,7 @@ class LineItemService extends BaseService {
     quantity: number,
     context: {
       unit_price?: number
+      includes_tax?: boolean
       metadata?: Record<string, unknown>
       customer_id?: string
       cart?: Cart
@@ -201,7 +218,6 @@ class LineItemService extends BaseService {
             .withTransaction(transactionManager)
             .retrieve(variantId, {
               relations: ["product"],
-              include_discount_prices: true,
             }),
           this.regionService_
             .withTransaction(transactionManager)
@@ -209,22 +225,29 @@ class LineItemService extends BaseService {
         ])
 
         let unit_price = Number(context.unit_price) < 0 ? 0 : context.unit_price
+
+        let unitPriceIncludesTax = false
+
         let shouldMerge = false
 
         if (context.unit_price === undefined || context.unit_price === null) {
           shouldMerge = true
-          unit_price = await this.productVariantService_
+          const variantPricing = await this.pricingService_
             .withTransaction(transactionManager)
-            .getRegionPrice(variant.id, {
-              regionId: region.id,
+            .getProductVariantPricingById(variant.id, {
+              region_id: region.id,
               quantity: quantity,
               customer_id: context?.customer_id,
               include_discount_prices: true,
             })
+
+          unitPriceIncludesTax = !!variantPricing.calculated_price_includes_tax
+
+          unit_price = variantPricing.calculated_price ?? undefined
         }
 
         const rawLineItem: Partial<LineItem> = {
-          unit_price: unit_price as number,
+          unit_price: unit_price,
           title: variant.product.title,
           description: variant.title,
           thumbnail: variant.product.thumbnail,
@@ -236,10 +259,18 @@ class LineItemService extends BaseService {
           should_merge: shouldMerge,
         }
 
-        const lineLitemRepo = transactionManager.getCustomRepository(
+        if (
+          this.featureFlagRouter_.isFeatureEnabled(
+            TaxInclusivePricingFeatureFlag.key
+          )
+        ) {
+          rawLineItem.includes_tax = unitPriceIncludesTax
+        }
+
+        const lineItemRepo = transactionManager.getCustomRepository(
           this.lineItemRepository_
         )
-        const lineItem = lineLitemRepo.create(rawLineItem)
+        const lineItem = lineItemRepo.create(rawLineItem)
 
         if (context.cart) {
           const adjustments = await this.lineItemAdjustmentService_
@@ -318,6 +349,19 @@ class LineItemService extends BaseService {
           .then((lineItem) => lineItem && lineItemRepository.remove(lineItem))
       }
     )
+  }
+
+  /**
+   * Create a line item tax line.
+   * @param args - tax line partial passed to the repo create method
+   * @return a new line item tax line
+   */
+  public createTaxLine(args: DeepPartial<LineItemTaxLine>): LineItemTaxLine {
+    const itemTaxLineRepo = this.manager_.getCustomRepository(
+      this.itemTaxLineRepo_
+    )
+
+    return itemTaxLineRepo.create(args)
   }
 }
 
