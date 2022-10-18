@@ -20,13 +20,12 @@ import expressLoader from "./express"
 import featureFlagsLoader from "./feature-flags"
 import Logger from "./logger"
 import modelsLoader from "./models"
-import passportLoader from "./passport"
 import pluginsLoader, { registerPluginModels } from "./plugins"
 import redisLoader from "./redis"
 import repositoriesLoader from "./repositories"
 import searchIndexLoader from "./search-index"
 import servicesLoader from "./services"
-import strategiesLoader from "./strategies"
+import strategiesLoader, { authStrategies } from "./strategies"
 import subscribersLoader from "./subscribers"
 
 type Options = {
@@ -136,9 +135,14 @@ export default async ({
   const expActivity = Logger.activity("Initializing express")
   track("EXPRESS_INIT_STARTED")
   await expressLoader({ app: expressApp, configModule })
-  await passportLoader({ app: expressApp, container, configModule })
   const exAct = Logger.success(expActivity, "Express intialized") || {}
   track("EXPRESS_INIT_COMPLETED", { duration: exAct.duration })
+
+  const authStratActivity = Logger.activity("Initializing auth strategies")
+  track("STRATEGIES_INIT_STARTED")
+  await authStrategies({ container, configModule, app: expressApp })
+  const authStratAct = Logger.success(authStratActivity, "Auth strategies initialized") || {}
+  track("STRATEGIES_INIT_COMPLETED", { duration: authStratAct.duration })
 
   // Add the registered services to the request scope
   expressApp.use((req: Request, res: Response, next: NextFunction) => {
@@ -187,7 +191,7 @@ export default async ({
   return { container, dbConnection, app: expressApp }
 }
 
-function asArray(
+export function asArray(
   resolvers: (ClassOrFunctionReturning<unknown> | Resolver<unknown>)[]
 ): { resolve: (container: AwilixContainer) => unknown[] } {
   return {

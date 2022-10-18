@@ -5,11 +5,17 @@ import { TransactionBaseService } from "../interfaces"
 import UserService from "./user"
 import CustomerService from "./customer"
 import { EntityManager } from "typeorm"
+import AbstractAuthStrategy from "../interfaces/authentication-strategy"
+import { Request } from "express"
+import { StrategyResolverService } from "./index"
+import AdminDefaultAuthenticationStrategy from "../strategies/authentication/admin-authentication"
+import StoreDefaultAuthenticationStrategy from "../strategies/authentication/store-authentication"
 
 type InjectedDependencies = {
   manager: EntityManager
   userService: UserService
   customerService: CustomerService
+  strategyResolverService: StrategyResolverService
 }
 
 /**
@@ -20,13 +26,25 @@ class AuthService extends TransactionBaseService {
   protected transactionManager_: EntityManager | undefined
   protected readonly userService_: UserService
   protected readonly customerService_: CustomerService
+  protected readonly strategyResolverService_: StrategyResolverService
 
-  constructor({ manager, userService, customerService }: InjectedDependencies) {
-    super(arguments[0])
+  constructor({
+    manager,
+    userService,
+    customerService,
+    strategyResolverService,
+  }: InjectedDependencies) {
+    super({
+      manager,
+      userService,
+      customerService,
+      strategyResolverService,
+    })
 
     this.manager_ = manager
     this.userService_ = userService
     this.customerService_ = customerService
+    this.strategyResolverService_ = strategyResolverService
   }
 
   /**
@@ -122,7 +140,6 @@ class AuthService extends TransactionBaseService {
           }
         }
       } catch (error) {
-        console.log("error ->", error)
         // ignore
       }
 
@@ -180,6 +197,46 @@ class AuthService extends TransactionBaseService {
         error: "Invalid email or password",
       }
     })
+  }
+
+  async retrieveAuthenticationStrategy(
+    req: Request,
+    scope: "admin" | "store"
+  ): Promise<AbstractAuthStrategy> {
+    let authStrategy: AbstractAuthStrategy | undefined
+
+    const authenticationStrategies = req.scope.resolve(
+      "authenticationStrategies"
+    ) as AbstractAuthStrategy[]
+    const userStrategies = authenticationStrategies.filter((strategy) => {
+      return (
+        (strategy.constructor as any).identifier !==
+          AdminDefaultAuthenticationStrategy.identifier &&
+        (strategy.constructor as any).identifier !==
+          StoreDefaultAuthenticationStrategy.identifier
+      )
+    })
+
+    for (const strategy of userStrategies) {
+      const shouldUse = await strategy.shouldUseStrategy(req, scope)
+      if (shouldUse) {
+        authStrategy = strategy
+        break
+      }
+    }
+
+    if (!authStrategy) {
+      authStrategy =
+        scope === "admin"
+          ? this.strategyResolverService_.resolveAuthByType(
+              "core-admin-default-auth"
+            )
+          : this.strategyResolverService_.resolveAuthByType(
+              "core-store-default-auth"
+            )
+    }
+
+    return authStrategy
   }
 }
 

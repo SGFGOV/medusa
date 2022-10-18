@@ -1,3 +1,6 @@
+import { AuthService } from "../../../../services"
+import { Request, Response } from "express"
+
 /**
  * @oas [delete] /auth
  * operationId: "DeleteAuth"
@@ -38,7 +41,11 @@
  *  "500":
  *    $ref: "#/components/responses/500_error"
  */
-export default async (req, res) => {
-  req.session.destroy()
-  res.status(200).end()
+export default async (req: Request, res: Response) => {
+  const authService = req.scope.resolve("authService") as AuthService
+  const authStrategy = await authService.retrieveAuthenticationStrategy(
+    req,
+    "admin"
+  )
+  await authStrategy.unAuthenticate(req, res)
 }
