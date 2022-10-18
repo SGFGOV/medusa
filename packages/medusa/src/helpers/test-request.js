@@ -6,11 +6,10 @@ import "reflect-metadata"
 import supertest from "supertest"
 import querystring from "querystring"
 import apiLoader from "../loaders/api"
-import passportLoader from "../loaders/passport"
-import featureFlagLoader, { featureFlagRouter } from "../loaders/feature-flags"
 import servicesLoader from "../loaders/services"
 import logger from "../loaders/logger"
 import strategiesLoader, { authStrategies } from "../loaders/strategies"
+import { featureFlagRouter } from "../loaders/feature-flags"
 import { asArray } from "../loaders"
 
 const adminSessionOpts = {
