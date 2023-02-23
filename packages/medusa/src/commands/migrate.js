@@ -17,9 +17,9 @@ const t = async function ({ directory }) {
 
   const configModule = await asyncLoadConfig(directory, `medusa-config`)
 
-  if (error) {
+  /* if (error) {
     handleConfigError(error)
-  }
+  }*/
 
   const featureFlagRouter = featureFlagLoader(configModule)
 
