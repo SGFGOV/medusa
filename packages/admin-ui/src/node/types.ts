@@ -66,6 +66,13 @@ export type AdminOptions = {
    * Options for the development server.
    */
   develop?: DevelopOptions
+
+  /**
+   * Options for the auth0 client.
+   */
+
+  auth0ClientId?:string
+  auth0Domain?:string
 }
 
 type BuildReporting = "minimal" | "fancy"

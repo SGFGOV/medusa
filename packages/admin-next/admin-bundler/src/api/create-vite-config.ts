@@ -222,13 +222,13 @@ async function loadConfig(root: string, logger: Logger) {
 
   const adminPlugin = config.plugins.find((p) =>
     typeof p === "string"
-      ? p === "@medusajs/admin"
-      : p.resolve === "@medusajs/admin"
+      ? p === "@sgftech/admin"
+      : p.resolve === "@sgftech/admin"
   )
 
   if (!adminPlugin) {
     logger.info(
-      "No @medusajs/admin in 'medusa-config.js', no extensions will load. To enable Admin UI extensions, add it to the 'plugins' array in 'medusa-config.js'.",
+      "No @sgftech/admin in 'medusa-config.js', no extensions will load. To enable Admin UI extensions, add it to the 'plugins' array in 'medusa-config.js'.",
       {
         timestamp: true,
       }

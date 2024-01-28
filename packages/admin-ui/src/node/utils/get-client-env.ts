@@ -32,6 +32,9 @@ type GetClientEnvArgs = {
   path?: string
   env?: string
   backend?: string
+  auth0ClientId?:string
+  auth0Domain?:string
+
 }
 
 export const getClientEnv = (args: GetClientEnvArgs) => {
@@ -47,6 +50,10 @@ export const getClientEnv = (args: GetClientEnvArgs) => {
         ADMIN_PATH: args.path || "/",
         NODE_ENV: args.env || "development",
         MEDUSA_BACKEND_URL: args.backend || process.env.MEDUSA_BACKEND_URL,
+        MEDUSA_ADMIN_REACT_APP_AUTH0_CLIENT_ID: args.auth0ClientId ||
+           process.env.MEDUSA_ADMIN_REACT_APP_AUTH0_CLIENT_ID || "XXXXXX",
+        MEDUSA_ADMIN_REACT_APP_AUTH0_DOMAIN:args.auth0Domain ||
+            process.env.MEDUSA_ADMIN_REACT_APP_AUTH0_DOMAIN || "http://localhost:9000"
       }
     )
 

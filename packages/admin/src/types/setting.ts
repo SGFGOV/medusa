@@ -1,3 +1,3 @@
-import type { SettingConfig, SettingProps } from "@medusajs/admin-ui"
+import type { SettingConfig, SettingProps } from "@sgftech/admin-ui"
 
 export { SettingConfig, SettingProps }

@@ -1,8 +1,8 @@
 {
-  "name": "@medusajs/admin-ui",
-  "author": "Kasper Kristensen <kasper@medusajs.com>",
+  "name": "@sgftech/admin-ui",
+  "author": "Govind Diwakar <sgf@sourcegoodfood.com>",
   "license": "MIT",
-  "version": "2.1.11",
+  "version": "2.1.21",
   "repository": {
     "type": "git",
     "url": "https://github.com/medusajs/medusa.git",
@@ -32,6 +32,7 @@
     "sync:i18n": "i18next 'ui/src/**/*.{ts,tsx,js,jsx}' -c 'ui/i18next-parser.config.js'"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@babel/parser": "7.22.5",
     "@babel/traverse": "7.22.5",
     "@hookform/error-message": "^2.0.1",

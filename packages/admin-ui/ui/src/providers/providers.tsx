@@ -12,7 +12,7 @@ import { RouteProvider } from "./route-provider"
 import { SettingProvider } from "./setting-provider"
 import { WidgetProvider } from "./widget-provider"
 import { ImportRefresh } from "./import-refresh"
-
+import { AuthProvider } from "./auth-provider"
 type Props = PropsWithChildren<{
   widgetRegistry: WidgetRegistry
   routeRegistry: RouteRegistry
@@ -30,7 +30,8 @@ export const Providers = ({
 }: Props) => {
   return (
     <HelmetProvider>
-      <MedusaProvider>
+        <MedusaProvider>
+        <AuthProvider>
         <FeatureFlagProvider>
           <PollingProvider>
             <ImportRefresh>
@@ -48,6 +49,7 @@ export const Providers = ({
             </ImportRefresh>
           </PollingProvider>
         </FeatureFlagProvider>
+        </AuthProvider>
       </MedusaProvider>
     </HelmetProvider>
   )

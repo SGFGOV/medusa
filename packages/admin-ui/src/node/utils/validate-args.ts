@@ -7,19 +7,19 @@ function validateArgs(args: CustomWebpackConfigArgs) {
   if (options.path) {
     if (!options.path.startsWith("/")) {
       logger.panic(
-        "'path' in the options of `@medusajs/admin` must start with a '/'"
+        "'path' in the options of `@sgftech/admin` must start with a '/'"
       )
     }
 
     if (options.path !== "/" && options.path.endsWith("/")) {
       logger.panic(
-        "'path' in the options of `@medusajs/admin` cannot end with a '/'"
+        "'path' in the options of `@sgftech/admin` cannot end with a '/'"
       )
     }
 
     if (typeof options.path !== "string") {
       logger.panic(
-        "'path' in the options of `@medusajs/admin` must be a string"
+        "'path' in the options of `@sgftech/admin` must be a string"
       )
     }
   }

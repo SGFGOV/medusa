@@ -1,3 +1,3 @@
-import type { RouteConfig, RouteProps } from "@medusajs/admin-ui"
+import type { RouteConfig, RouteProps } from "@sgftech/admin-ui"
 
 export { RouteConfig, RouteProps }

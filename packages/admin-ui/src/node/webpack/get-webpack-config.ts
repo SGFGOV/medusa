@@ -39,6 +39,8 @@ export function getWebpackConfig({
     env,
     backend: options?.backend,
     path: options?.path,
+    auth0ClientId:options?.auth0ClientId,
+    auth0Domain:options?.auth0Domain
   })
 
   const publicPath = formatPublicPath(options?.path)

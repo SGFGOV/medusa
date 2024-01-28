@@ -1,6 +1,6 @@
 {
-  "name": "@medusajs/admin",
-  "version": "7.1.10",
+  "name": "@sgftech/admin",
+  "version": "7.1.12",
   "bin": {
     "medusa-admin": "./bin/medusa-admin.js"
   },
@@ -27,13 +27,13 @@
     "directory": "packages/admin"
   },
   "dependencies": {
-    "@medusajs/admin-ui": "^2.1.11",
     "@rollup/plugin-alias": "5.0.0",
     "@rollup/plugin-commonjs": "24.1.0",
     "@rollup/plugin-json": "6.0.0",
     "@rollup/plugin-node-resolve": "15.0.2",
     "@rollup/plugin-replace": "5.0.2",
     "@rollup/plugin-virtual": "^3.0.1",
+    "@sgftech/admin-ui": "^2.1.11",
     "commander": "^10.0.0",
     "dotenv": "16.3.1",
     "esbuild": "0.17.18",

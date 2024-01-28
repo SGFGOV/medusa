@@ -1,4 +1,4 @@
-import { build as adminBuild, clean } from "@medusajs/admin-ui"
+import { build as adminBuild, clean } from "@sgftech/admin-ui"
 import { resolve } from "path"
 import { BuildOptions } from "../types"
 import { getPluginPaths, loadConfig } from "../utils"
@@ -38,6 +38,11 @@ export default async function build({
       path: pathOption,
       backend: backendOption,
       outDir: outDirOption,
+      /**
+   * Options for the auth0 client.
+   */
+    auth0ClientId: process.env.MEDUSA_ADMIN_REACT_APP_AUTH0_DOMAIN,
+    auth0Domain: process.env.MEDUSA_ADMIN_REACT_APP_AUTH0_CLIENT_ID
     },
   })
 

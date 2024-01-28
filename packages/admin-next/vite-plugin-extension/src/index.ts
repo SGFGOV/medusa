@@ -14,7 +14,7 @@ import MagicString from "magic-string"
 import path from "path"
 import { Logger, PluginOption, ViteDevServer } from "vite"
 
-import { InjectionZone, injectionZones } from "@medusajs/admin-shared"
+import { InjectionZone, injectionZones } from "@sgftech/admin-shared"
 
 const traverse = (_traverse as any).default as typeof _traverse
 

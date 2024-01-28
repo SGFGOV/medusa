@@ -1,4 +1,4 @@
-import { AdminOptions, develop as adminDevelop } from "@medusajs/admin-ui"
+import { AdminOptions, develop as adminDevelop } from "@sgftech/admin-ui"
 import { getPluginPaths, loadConfig } from "../utils"
 
 type DevelopArgs = AdminOptions & {
@@ -9,7 +9,7 @@ export default async function develop({ backend, path, port }: DevelopArgs) {
   const config = loadConfig(true)
 
   if (!config) {
-    // @medusajs/admin is not part of the projects plugins
+    // @sgftech/admin is not part of the projects plugins
     // so we return early
     return
   }
