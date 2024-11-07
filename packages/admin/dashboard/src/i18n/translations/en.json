@@ -996,7 +996,7 @@
       "returnTotal": "Return total",
       "inboundTotal": "Inbound total",
       "refundAmount": "Refund amount",
-      "outstandingAmount": "Outstanding amount",
+      "fundssAvailableForRefund": "Funds available for refund",
       "reason": "Reason",
       "reasonHint": "Choose why the customer want to return items.",
       "note": "Note",
