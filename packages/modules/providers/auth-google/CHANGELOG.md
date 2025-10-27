@@ -1,5 +1,12 @@
 # @medusajs/auth-google
 
+## 2.11.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @medusajs/framework@2.11.2
+
 ## 2.11.1
 
 ### Patch Changes

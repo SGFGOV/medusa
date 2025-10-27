@@ -1,5 +1,14 @@
 # @medusajs/pricing
 
+## 2.11.2
+
+### Patch Changes
+
+- [#13852](https://github.com/medusajs/medusa/pull/13852) [`f055bfd723e47b381a780b23dc230203b989088c`](https://github.com/medusajs/medusa/commit/f055bfd723e47b381a780b23dc230203b989088c) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(pricing): Update store + list price preferences
+
+- Updated dependencies []:
+  - @medusajs/framework@2.11.2
+
 ## 2.11.1
 
 ### Patch Changes
