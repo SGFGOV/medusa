@@ -1,5 +1,14 @@
 # @medusajs/notification
 
+## 2.11.2
+
+### Patch Changes
+
+- [#13781](https://github.com/medusajs/medusa/pull/13781) [`cc2614ded7f83cdbe7e7f7f809d05f5ab6059fe4`](https://github.com/medusajs/medusa/commit/cc2614ded7f83cdbe7e7f7f809d05f5ab6059fe4) Thanks [@peterlgh7](https://github.com/peterlgh7)! - add Medusa Cloud Email provider
+
+- Updated dependencies []:
+  - @medusajs/framework@2.11.2
+
 ## 2.11.1
 
 ### Patch Changes

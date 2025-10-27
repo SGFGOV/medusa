@@ -1,6 +1,6 @@
 {
   "name": "@medusajs/core-flows",
-  "version": "2.11.1",
+  "version": "2.11.2",
   "description": "Set of workflow definitions for Medusa",
   "main": "dist/index.js",
   "exports": {
@@ -26,7 +26,7 @@
   "author": "Medusa",
   "license": "MIT",
   "devDependencies": {
-    "@medusajs/framework": "2.11.1",
+    "@medusajs/framework": "2.11.2",
     "@swc/core": "^1.7.28",
     "@swc/jest": "^0.2.36",
     "expect-type": "^0.20.0",
@@ -40,7 +40,7 @@
     "zod": "3.25.76"
   },
   "peerDependencies": {
-    "@medusajs/framework": "2.11.1"
+    "@medusajs/framework": "2.11.2"
   },
   "scripts": {
     "build": "rimraf dist && tsc --build",

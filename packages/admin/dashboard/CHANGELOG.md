@@ -1,5 +1,23 @@
 # @medusajs/dashboard
 
+## 2.11.2
+
+### Patch Changes
+
+- [#13860](https://github.com/medusajs/medusa/pull/13860) [`9f154c308ec62093c8e6c233767760be3148d917`](https://github.com/medusajs/medusa/commit/9f154c308ec62093c8e6c233767760be3148d917) Thanks [@NicolasGorga](https://github.com/NicolasGorga)! - fix(dashboard): Limit number of ids passed in tax region override queries to avoid PayloadTooLargeError
+
+- [#13623](https://github.com/medusajs/medusa/pull/13623) [`47572816778e21432d0201f4b2642a765c86fdbc`](https://github.com/medusajs/medusa/commit/47572816778e21432d0201f4b2642a765c86fdbc) Thanks [@fPolic](https://github.com/fPolic)! - feat: scoped variant images
+
+- [#13787](https://github.com/medusajs/medusa/pull/13787) [`2eca81ec0fc572409c36b0ade11c8ccf499469aa`](https://github.com/medusajs/medusa/commit/2eca81ec0fc572409c36b0ade11c8ccf499469aa) Thanks [@kevinresol](https://github.com/kevinresol)! - add input field for tracking_url and label_url in shipment form
+
+- [#13863](https://github.com/medusajs/medusa/pull/13863) [`ef798160ea689ece75f6ae9022faedf301b1306d`](https://github.com/medusajs/medusa/commit/ef798160ea689ece75f6ae9022faedf301b1306d) Thanks [@siddarthan007](https://github.com/siddarthan007)! - Fixed a bug in product attributes form such that it now accepts decimal values
+
+- Updated dependencies [[`47572816778e21432d0201f4b2642a765c86fdbc`](https://github.com/medusajs/medusa/commit/47572816778e21432d0201f4b2642a765c86fdbc)]:
+  - @medusajs/js-sdk@2.11.2
+  - @medusajs/admin-shared@2.11.2
+  - @medusajs/icons@2.11.2
+  - @medusajs/ui@4.0.26
+
 ## 2.11.1
 
 ### Patch Changes

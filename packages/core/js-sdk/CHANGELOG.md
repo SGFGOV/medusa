@@ -1,5 +1,11 @@
 # @medusajs/js-sdk
 
+## 2.11.2
+
+### Patch Changes
+
+- [#13623](https://github.com/medusajs/medusa/pull/13623) [`47572816778e21432d0201f4b2642a765c86fdbc`](https://github.com/medusajs/medusa/commit/47572816778e21432d0201f4b2642a765c86fdbc) Thanks [@fPolic](https://github.com/fPolic)! - feat: scoped variant images
+
 ## 2.11.1
 
 ### Patch Changes

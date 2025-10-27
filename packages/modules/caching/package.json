@@ -1,6 +1,6 @@
 {
   "name": "@medusajs/caching",
-  "version": "2.11.1",
+  "version": "2.11.2",
   "description": "Caching Module for Medusa",
   "main": "dist/index.js",
   "repository": {
@@ -28,8 +28,8 @@
     "test:integration": "jest --runInBand --forceExit -- integration-tests/__tests__/**/*.ts"
   },
   "devDependencies": {
-    "@medusajs/framework": "2.11.1",
-    "@medusajs/test-utils": "2.11.1",
+    "@medusajs/framework": "2.11.2",
+    "@medusajs/test-utils": "2.11.2",
     "@swc/core": "^1.7.28",
     "@swc/jest": "^0.2.36",
     "jest": "^29.7.0",
@@ -38,7 +38,7 @@
     "typescript": "^5.6.2"
   },
   "peerDependencies": {
-    "@medusajs/framework": "2.11.1",
+    "@medusajs/framework": "2.11.2",
     "awilix": "^8.0.1"
   },
   "dependencies": {

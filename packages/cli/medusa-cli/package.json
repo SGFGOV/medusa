@@ -1,6 +1,6 @@
 {
   "name": "@medusajs/cli",
-  "version": "2.11.1",
+  "version": "2.11.2",
   "description": "Command Line interface for Medusa Commerce",
   "main": "dist/index.js",
   "bin": {
@@ -40,9 +40,9 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
-    "@medusajs/deps": "2.11.1",
-    "@medusajs/telemetry": "2.11.1",
-    "@medusajs/utils": "2.11.1",
+    "@medusajs/deps": "2.11.2",
+    "@medusajs/telemetry": "2.11.2",
+    "@medusajs/utils": "2.11.2",
     "@types/express": "^4.17.17",
     "chalk": "^4.0.0",
     "configstore": "5.0.1",
